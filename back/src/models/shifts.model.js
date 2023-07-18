@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const shiftSchema = new mongoose.Schema({
+  description: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     required: true,

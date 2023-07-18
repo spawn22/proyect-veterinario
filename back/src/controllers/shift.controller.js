@@ -12,8 +12,9 @@ export const getShifts = async (req, res) => {
 };
 
 export const postShifts = async (req, res) => {
-  const { date, start_time, end_time } = req.body;
+  const { description, date, start_time, end_time } = req.body;
   const newShift = new Shift({
+    description,
     date,
     start_time,
     end_time,
