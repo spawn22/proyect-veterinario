@@ -10,14 +10,10 @@ import { validateSchema } from "../middlewares/validator.middleware.js";
 import { createShiftSchema } from "../schemas/shift.schema.js";
 const router = Router();
 
-router.get("/shift", authRequired, getShifts);
-router.post(
-  "/shift",
-  authRequired,
-  validateSchema(createShiftSchema),
-  postShifts
-);
-router.put("/shift/:id", authRequired, editShifts);
-router.delete("/shift/:id", authRequired, deleteShifts);
+
+router.route("/shift").get(authRequired, getShifts);
+router.route("/shift").post(authRequired, validateSchema(createShiftSchema), postShifts);
+router.route("/shift/:id").put( authRequired, editShifts);
+router.route("/shift/:id").delete(authRequired, deleteShifts);
 
 export default router;

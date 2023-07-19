@@ -10,14 +10,8 @@ import { validateSchema } from "../middlewares/validator.middleware.js";
 import { createAnimalSchema } from "../schemas/animal.schema.js";
 const router = Router();
 
-router.get("/patient", authRequired, getAllPatientsAnimals);
-router.post(
-  "/patient",
-  authRequired,
-  validateSchema(createAnimalSchema),
-  createPatientAnimal
-);
-router.put("/patient/:id", authRequired, EditPatientAnimal);
-router.delete("/patient/:id", authRequired, deletePatientAnimal);
-
+router.route("/patient").get(authRequired, getAllPatientsAnimals);
+router.route("/patient").post(authRequired, validateSchema(createAnimalSchema), createPatientAnimal);
+router.route("/patient/:id").put(authRequired, EditPatientAnimal);
+router.route("/patient/:id").delete(authRequired, deletePatientAnimal);
 export default router;

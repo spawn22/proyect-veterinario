@@ -1,8 +1,8 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
-import { createAccessToken } from "../libs/jwt.js";
+import { createAccessToken, createRefreshToken } from "../libs/jwt.js";
 
-export const Register = async (req, res) => {
+export const register = async (req, res) => {
   const { name, lastName, email, username, password } = req.body;
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -16,9 +16,11 @@ export const Register = async (req, res) => {
 
     const userSaved = await newUser.save();
 
-    const token = await createAccessToken({ id: userSaved._id });
+    const accessToken = await createAccessToken({ id: userSaved._id });
+    const refreshToken = await createRefreshToken({ id: userSaved._id });
 
-    res.cookie("token", token);
+    res.cookie("accessToken", accessToken);
+    res.cookie("refreshToken", refreshToken);
     res.json({
       message: "User Created Successfully",
       id: userSaved._id,
@@ -32,7 +34,7 @@ export const Register = async (req, res) => {
   }
 };
 
-export const Login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const userFound = await User.findOne({ email });
@@ -43,9 +45,10 @@ export const Login = async (req, res) => {
     if (!passwordCompare)
       return res.status(400).json({ message: "Invalid password" });
 
-    const token = await createAccessToken({ id: userFound._id });
-
-    res.cookie("token", token);
+    const accessToken = await createAccessToken({ id: userFound._id });
+    const refreshToken = await createRefreshToken({ id: userFound._id });
+    res.cookie("accessToken", accessToken);
+    res.cookie("refreshToken", refreshToken);
     res.json({
       message: "User Login Successfully",
       id: userFound._id,
@@ -59,14 +62,35 @@ export const Login = async (req, res) => {
   }
 };
 
-export const Logout = async (req, res) => {
-  res.cookie("token", "", {
-    expires: new Date(0),
-  });
+export const logout = async (req, res) => {
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
   res.json({ message: "Logout Successfully" });
 };
 
-export const Profile = async (req, res) => {
+
+export const refreshToken = async (req, res) => {
+  const { refreshToken } = req.cookies;
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: "No refresh token provided" });
+  }
+
+  try {
+    const decodedToken = await verifyToken(refreshToken, TOKEN_SECRET);
+    const accessToken = await createAccessToken({ id: decodedToken.id });
+    const newRefreshToken = await createRefreshToken({ id: decodedToken.id });
+
+    res.cookie("accessToken", accessToken, { httpOnly: true });
+    res.cookie("refreshToken", newRefreshToken, { httpOnly: true });
+
+    res.json({ accessToken });
+  } catch (error) {
+    res.status(403).json({ message: "Invalid refresh token" });
+  }
+};
+
+export const profile = async (req, res) => {
   const userFound = await User.findById(req.user.id);
 
   if (!userFound) return res.status(400).json({ message: "User not found" });

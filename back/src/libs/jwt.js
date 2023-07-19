@@ -15,3 +15,19 @@ export function createAccessToken(payload) {
     );
   });
 }
+
+export function createRefreshToken(payload) {
+  return new Promise((resolve, reject) => {
+    jwt.sign(
+      payload,
+      TOKEN_SECRET,
+      {
+        expiresIn: "7d",
+      },
+      (err, token) => {
+        if (err) reject(err);
+        resolve(token);
+      }
+    );
+  });
+}
