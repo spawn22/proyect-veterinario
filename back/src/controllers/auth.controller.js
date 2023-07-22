@@ -1,5 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { TOKEN_SECRET } from "../config/config.js";
 import { createAccessToken, createRefreshToken } from "../libs/jwt.js";
 
 export const register = async (req, res) => {
@@ -56,6 +58,7 @@ export const login = async (req, res) => {
       username: userFound.username,
       name: userFound.name,
       lastName: userFound.lastName,
+      accessToken,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -65,9 +68,9 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
+  res.clearCookie("token");
   res.json({ message: "Logout Successfully" });
 };
-
 
 export const refreshToken = async (req, res) => {
   const { refreshToken } = req.cookies;
@@ -88,6 +91,24 @@ export const refreshToken = async (req, res) => {
   } catch (error) {
     res.status(403).json({ message: "Invalid refresh token" });
   }
+};
+
+export const verifyToken = async (req, res) => {
+  const { accessToken } = req.cookies;
+  if (!accessToken) return res.send(false);
+
+  jwt.verify(accessToken, TOKEN_SECRET, async (error, user) => {
+    if (error) return res.sendStatus(401);
+
+    const userFound = await User.findById(user.id);
+    if (!userFound) return res.sendStatus(401);
+
+    return res.json({
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+    });
+  });
 };
 
 export const profile = async (req, res) => {

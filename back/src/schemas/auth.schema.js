@@ -1,9 +1,19 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
-  username: z.string({
-    required_error: "Username is required",
-  }),
+  username: z.lazy((value) =>
+    value === ""
+      ? z.string({ required_error: "Username is required" })
+      : z.string()
+  ),
+  name: z.lazy((value) =>
+    value === "" ? z.string({ required_error: "Name is required" }) : z.string()
+  ),
+  lastName: z.lazy((value) =>
+    value === ""
+      ? z.string({ required_error: "Lastname is required" })
+      : z.string()
+  ),
   email: z
     .string({
       required_error: "Email is required",
@@ -18,13 +28,11 @@ export const registerSchema = z.object({
     .min(6, {
       message: "Password must be at least 6 characters long",
     }),
-  name: z.string({
-    required_error: "Name is required",
-  }),
-  lastName: z.string({
-    required_error: "Lastname is required",
-  }),
-});
+}).refine((data) => {
+  // Validar que no hayan campos vacíos
+  return !Object.values(data).some((value) => value === "");
+}, { message: "All fields are required" });
+
 
 export const loginSchema = z.object({
   email: z
