@@ -1,18 +1,19 @@
-import { Form, Link } from "react-router-dom";
-import { useAuthStore } from "../../store/auth";
-import { AuthContext } from "../../context/authContext";
-import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, Link } from 'react-router-dom';
+import { useAuthStore } from '../../store/auth';
+import { AuthContext } from '../../context/AuthContext';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const loginUser = useAuthStore((state) => state.loginUser);
   const [formFilled, setFormFilled] = useState(false);
   const [errors, setErrors] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const handleSubmit = (e) => {
@@ -21,35 +22,35 @@ function Login() {
     const user = loginUser(data);
     return user;
   };
-
+  
   useEffect(() => {
     if (context.isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [context.isAuthenticated, navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
-      case "email":
+      case 'email':
         setEmail(value);
         setErrors((prevState) => ({
           ...prevState,
-          email: value ? "" : "Email is required",
+          email: value ? '' : 'Email is required',
         }));
         break;
-      case "password":
+      case 'password':
         setPassword(value);
         setErrors((prevState) => ({
           ...prevState,
-          password: value ? "" : "Password is required",
+          password: value ? '' : 'Password is required',
         }));
         break;
       default:
         break;
     }
     // Verificar si todos los campos están llenos
-    setFormFilled(email !== "" && password !== "");
+    setFormFilled(email !== '' && password !== '');
   };
 
   return (
@@ -67,7 +68,7 @@ function Login() {
             name="email"
             placeholder="Email"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.email ? "border-red-500" : ""
+              errors.email ? 'border-red-500' : ''
             }`}
             onChange={handleInputChange}
           />
@@ -83,7 +84,7 @@ function Login() {
             name="password"
             placeholder="Password"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.password ? "border-red-500" : ""
+              errors.password ? 'border-red-500' : ''
             }`}
             onChange={handleInputChange}
           />

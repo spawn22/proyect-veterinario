@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
-import { AuthProvider } from "./context/authContext";
+import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
 
 const router = createBrowserRouter([

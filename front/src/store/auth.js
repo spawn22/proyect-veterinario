@@ -28,8 +28,8 @@ export const useAuthStore = create((set) => ({
         "http://localhost:3000/api/login",
         data,
         { withCredentials: true }
-      );
-      if (response.status === 200) {
+        );
+        if (response.status === 200) {
         const user = response.data;
         set(() => ({ user }));
         localStorage.setItem("token", user.accessToken);

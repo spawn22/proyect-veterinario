@@ -1,24 +1,25 @@
-import { Form, Link } from "react-router-dom";
-import { useAuthStore } from "../../store/auth";
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/authContext";
-import { useNavigate } from "react-router-dom";
+import { Form, Link } from 'react-router-dom';
+import { useAuthStore } from '../../store/auth';
+import { useState, useEffect, useContext } from 'react';
+// import { AuthContext } from '../../context/authContext';
+import {AuthContext} from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [formFilled, setFormFilled] = useState(false);
   const [errors, setErrors] = useState({
-    name: "",
-    lastName: "",
-    username: "",
-    email: "",
-    password: "",
+    name: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
   });
   const registerUser = useAuthStore((state) => state.registerUser);
 
@@ -31,46 +32,46 @@ function Register() {
 
   useEffect(() => {
     if (context.isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [context.isAuthenticated, navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
-      case "name":
+      case 'name':
         setName(value);
         setErrors((prevState) => ({
           ...prevState,
-          name: value ? "" : "Name is required",
+          name: value ? '' : 'Name is required',
         }));
         break;
-      case "lastName":
+      case 'lastName':
         setLastName(value);
         setErrors((prevState) => ({
           ...prevState,
-          lastName: value ? "" : "Last name is required",
+          lastName: value ? '' : 'Last name is required',
         }));
         break;
-      case "username":
+      case 'username':
         setUserName(value);
         setErrors((prevState) => ({
           ...prevState,
-          username: value ? "" : "Username is required",
+          username: value ? '' : 'Username is required',
         }));
         break;
-      case "email":
+      case 'email':
         setEmail(value);
         setErrors((prevState) => ({
           ...prevState,
-          email: value ? "" : "Email is required",
+          email: value ? '' : 'Email is required',
         }));
         break;
-      case "password":
+      case 'password':
         setPassword(value);
         setErrors((prevState) => ({
           ...prevState,
-          password: value ? "" : "Password is required",
+          password: value ? '' : 'Password is required',
         }));
         break;
       default:
@@ -78,11 +79,11 @@ function Register() {
     }
     // Verificar si todos los campos están llenos
     setFormFilled(
-      name !== "" &&
-        lastName !== "" &&
-        username !== "" &&
-        email !== "" &&
-        password !== ""
+      name !== '' &&
+        lastName !== '' &&
+        username !== '' &&
+        email !== '' &&
+        password !== ''
     );
   };
   return (
@@ -100,7 +101,7 @@ function Register() {
             name="name"
             placeholder="Name"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.name ? "border-red-500" : ""
+              errors.name ? 'border-red-500' : ''
             }`}
             onChange={handleInputChange}
           />
@@ -116,7 +117,7 @@ function Register() {
             name="lastName"
             placeholder="Last Name"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.lastName ? "border-red-500" : ""
+              errors.lastName ? 'border-red-500' : ''
             }`}
             onChange={handleInputChange}
           />
@@ -132,7 +133,7 @@ function Register() {
             name="username"
             placeholder="Username"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.username ? "border-red-500" : ""
+              errors.username ? 'border-red-500' : ''
             }`}
             onChange={handleInputChange}
           />
@@ -148,7 +149,7 @@ function Register() {
             name="email"
             placeholder="Email"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.email ? "border-red-500" : ""
+              errors.email ? 'border-red-500' : ''
             }`}
             onChange={handleInputChange}
           />
@@ -164,7 +165,7 @@ function Register() {
             name="password"
             placeholder="Password"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.password ? "border-red-500" : ""
+              errors.password ? 'border-red-500' : ''
             }`}
             onChange={handleInputChange}
           />
