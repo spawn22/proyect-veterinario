@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const context = useContext(AuthContext);
+
   const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUserName] = useState("");
@@ -20,19 +22,21 @@ function Register() {
     email: "",
     password: "",
   });
-  const registerUser = useAuthStore((state) => state.registerUser);
 
-  const handleSubmit = (event) => {
+  const registerUser = useAuthStore((state) => state.registerUser);
+  const StateErrors = useAuthStore((state) => state.errors);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = { name, lastName, username, email, password };
-    const user = registerUser(data);
-    return user;
+    await registerUser(data, navigate);
   };
 
   useEffect(() => {
     if (context.isAuthenticated) {
       navigate("/home");
     }
+    navigate("/");
   }, [context.isAuthenticated, navigate]);
 
   const handleInputChange = (event) => {
@@ -95,6 +99,11 @@ function Register() {
           Registro
         </h1>
         <div className="mb-4">
+          {StateErrors.length > 0 && (
+            <p className="mt-2 text-lg font-bold text-red-500  mb-2 h-6">
+              {StateErrors}
+            </p>
+          )}
           <input
             type="text"
             name="name"
@@ -180,18 +189,18 @@ function Register() {
         >
           ¿Ya estás registrado? Inicia sesión aquí
         </Link>
-        <Link
+        {/* <Link
           to="/login"
           className="block mt-4 text-blue-500 hover:text-blue-700"
         >
-          <button
-            type="submit"
-            className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            disabled={!formFilled}
-          >
-            Registro
-          </button>
-        </Link>
+        </Link> */}
+        <button
+          type="submit"
+          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={!formFilled}
+        >
+          Registro
+        </button>
       </Form>
     </div>
   );

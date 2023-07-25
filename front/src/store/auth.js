@@ -4,7 +4,9 @@ import axios from "axios";
 
 export const useAuthStore = create((set) => ({
   user: null,
-  registerUser: async (data) => {
+  errors: [],
+  messageError: "",
+  registerUser: async (data, navigate) => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/register",
@@ -14,15 +16,16 @@ export const useAuthStore = create((set) => ({
         const user = response.data;
         console.log(user);
         set(() => ({ user }));
+        navigate("/login");
         return user;
       } else {
         throw new Error("Error al registrar");
       }
     } catch (error) {
-      console.error(error);
+      set(() => ({ errors: error.response.data.error }));
     }
   },
-  loginUser: async (data) => {
+  loginUser: async (data, navigate) => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/login",
@@ -32,13 +35,15 @@ export const useAuthStore = create((set) => ({
       if (response.status === 200) {
         const user = response.data;
         set(() => ({ user }));
-        localStorage.setItem("token", user.accessToken);
+        navigate("/home");
         return user;
       } else {
         throw new Error("Error al iniciar sesión");
       }
     } catch (error) {
       console.error(error);
+      set(() => ({ errors: error.response.data.error }));
+      set(() => ({ messageError: error.response.data.message }));
     }
   },
   verify: async () =>

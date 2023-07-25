@@ -5,27 +5,33 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 function Login() {
   const context = useContext(AuthContext);
+
   const navigate = useNavigate();
+
+  const loginUser = useAuthStore((state) => state.loginUser);
+  const StateErrors = useAuthStore((state) => state.errors);
+
+  const MessageError = useAuthStore((state) => state.messageError);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loginUser = useAuthStore((state) => state.loginUser);
   const [formFilled, setFormFilled] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { email, password };
-    const user = loginUser(data);
-    return user;
+    await loginUser(data, navigate);
   };
 
   useEffect(() => {
     if (context.isAuthenticated) {
       navigate("/home");
     }
+    navigate("/login");
   }, [context.isAuthenticated, navigate]);
 
   const handleInputChange = (event) => {
@@ -62,6 +68,17 @@ function Login() {
           Inicia Sesion
         </h1>
         <div className="mb-4">
+          {StateErrors ? (
+            <p className="mt-2 text-lg font-bold text-red-500  mb-2 h-6">
+              {StateErrors}
+            </p>
+          ) : null}
+
+          {MessageError ? (
+            <p className="mt-2 text-lg font-bold text-red-500  mb-2 h-6">
+              {MessageError}
+            </p>
+          ) : null}
           <input
             type="email"
             name="email"
@@ -93,21 +110,21 @@ function Login() {
             </p>
           )}
         </div>
-        <Link to="/" className="block mt-4 text-blue-500 hover:text-blue-700">
+        <Link to="/" className="block mt-5 text-blue-500 hover:text-blue-700 ">
           ¿No estás registrado? Regístrate aquí
         </Link>
-        <Link
+        {/* <Link
           to="/home"
           className="block mt-4 text-blue-500 hover:text-blue-700"
         >
-          <button
-            type="submit"
-            className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            disabled={!formFilled}
-          >
-            Inicia Sesion
-          </button>
-        </Link>
+        </Link> */}
+        <button
+          type="submit"
+          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={!formFilled}
+        >
+          Inicia Sesion
+        </button>
       </Form>
     </div>
   );
