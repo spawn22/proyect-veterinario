@@ -3,6 +3,7 @@ import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
+import Home from "./components/Home/Home";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <h1>Home</h1>,
+    element: <Home/>,
   },
 ]);
 
