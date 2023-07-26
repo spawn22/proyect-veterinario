@@ -31,7 +31,7 @@ function Login() {
     if (context.isAuthenticated) {
       navigate("/home");
     }
-    navigate("/login");
+   
   }, [context.isAuthenticated, navigate]);
 
   const handleInputChange = (event) => {

@@ -10,7 +10,4 @@ export const createShiftSchema = z.object({
   start_time: z.string({
     required_error: "Start time is required",
   }),
-  end_time: z.string({
-    required_error: "End time is required",
-  }),
 });

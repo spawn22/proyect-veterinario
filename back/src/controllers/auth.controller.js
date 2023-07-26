@@ -18,11 +18,6 @@ export const register = async (req, res) => {
 
     const userSaved = await newUser.save();
 
-    const accessToken = await createAccessToken({ id: userSaved._id });
-    const refreshToken = await createRefreshToken({ id: userSaved._id });
-
-    res.cookie("accessToken", accessToken);
-    res.cookie("refreshToken", refreshToken);
     res.json({
       message: "User Created Successfully",
       id: userSaved._id,
@@ -58,7 +53,6 @@ export const login = async (req, res) => {
       username: userFound.username,
       name: userFound.name,
       lastName: userFound.lastName,
-      accessToken,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

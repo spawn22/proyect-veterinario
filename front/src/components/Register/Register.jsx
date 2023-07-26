@@ -36,7 +36,6 @@ function Register() {
     if (context.isAuthenticated) {
       navigate("/home");
     }
-    navigate("/");
   }, [context.isAuthenticated, navigate]);
 
   const handleInputChange = (event) => {

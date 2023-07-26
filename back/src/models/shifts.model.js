@@ -13,14 +13,15 @@ const shiftSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  end_time: {
-    type: String,
-    required: true,
+  animal: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Animal",
+    required: true, 
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
 });
-
 export default mongoose.model("Shift", shiftSchema);

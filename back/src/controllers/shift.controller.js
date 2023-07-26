@@ -4,7 +4,7 @@ export const getShifts = async (req, res) => {
   try {
     const shifts = await Shift.find({
       user: req.user.id,
-    });
+    }).populate("animal");
     res.status(200).json(shifts);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -12,12 +12,12 @@ export const getShifts = async (req, res) => {
 };
 
 export const postShifts = async (req, res) => {
-  const { description, date, start_time, end_time } = req.body;
+  const { description, date, start_time, animal } = req.body;
   const newShift = new Shift({
     description,
     date,
     start_time,
-    end_time,
+    animal,
     user: req.user.id,
   });
   try {
