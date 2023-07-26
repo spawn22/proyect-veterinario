@@ -1,47 +1,58 @@
 import { create } from "zustand";
-import axios from "axios";
+import instance from "./interceptors/config";
 
-export const useShiftsStore = create((set) => ({
+export const useShiftsStore = create((set, get) => ({
   shifts: [],
+  errors: [],
   getShifts: async () => {
-    const res = await axios.get("http://localhost:3000/api/shift", {
-      withCredentials: true,
-    });
-    const data = res.data;
-    set({ shifts: await data });
+    try {
+      const res = await instance.get("/shift");
+      const data = res.data;
+      set({ shifts: data });
+    } catch (error) {
+      set({ errors: [...get().errors, error.res.data] });
+    }
   },
   postShifts: async (data) => {
     try {
-      const res = await axios.post("http://localhost:3000/api/shift", data, {
-        withCredentials: true,
-      });
+      const res = await instance.post("/shift", data);
+      set((state) => ({ shifts: [...state.shifts, res.data] }));
       return res.data;
     } catch (error) {
-      console.error(error);
+      set((state) => ({ errors: [...state.errors, error.res.data] }));
+    } finally {
+      get().getShifts();
     }
   },
   putShifts: async (id, data) => {
     try {
-      const res = await axios.put(
-        `http://localhost:3000/api/shift/${id}`,
-        data,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await instance.put(`/shift/${id}`, data);
+      set((state) => ({
+        shifts: state.shifts.map((shift) => {
+          if (shift.id === id) {
+            return res.data;
+          }
+          return shift;
+        }),
+      }));
       return res.data;
     } catch (error) {
-      console.error(error);
+      set((state) => ({ errors: [...state.errors, error.res.data] }));
+    } finally {
+      get().getShifts();
     }
   },
   deleteShifts: async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/api/shift/${id}`, {
-        withCredentials: true,
-      });
+      const res = await instance.delete(`/shift/${id}`);
+      set((state) => ({
+        shifts: state.shifts.filter((shift) => shift.id !== id),
+      }));
       return res.data;
     } catch (error) {
-      console.error(error);
+      set((state) => ({ errors: [...state.errors, error.res.data] }));
+    } finally {
+      get().getShifts();
     }
   },
 }));

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useShiftsStore } from "../../store/shifts";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import moment from "moment";
+import toast, { Toaster } from "react-hot-toast";
 
 function Calendar() {
   const getShifts = useShiftsStore((state) => state.getShifts);
@@ -9,30 +11,58 @@ function Calendar() {
   const deleteShifts = useShiftsStore((state) => state.deleteShifts);
   const putShifts = useShiftsStore((state) => state.putShifts);
 
-  const [date, setDate] = useState("");
-  const [start_time, setStartTime] = useState("");
-  const [selectPatient, setSelectedPatient] = useState("");
-  const [description, setDescription] = useState("");
+  const [shiftData, setShiftData] = useState({
+    date: "",
+    start_time: "",
+    selectPatient: "",
+    description: "",
+  });
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [shiftToEdit, setShiftToEdit] = useState(null);
 
   useEffect(() => {
-    getShifts();
+    toast.promise(
+      getShifts(),
+      {
+        loading: "Cargando turnos",
+        success: "Turnos cargados",
+        error: "Error al cargar turnos",
+      },
+      {
+        success: {
+          duration: 3000,
+        },
+      }
+    );
   }, [getShifts]);
 
   // Función para manejar el evento de agregar turno
   const handleAddShifts = (e) => {
     e.preventDefault();
-    const data = { date, start_time, selectPatient, description };
-    postShifts(data).then(() => {
-      setIsFormVisible(false);
-      setDate("");
-      setStartTime("");
-      setSelectedPatient("");
-      setDescription("");
-      getShifts();
-    });
+    if (
+      !shiftData.date ||
+      !shiftData.start_time ||
+      !shiftData.selectPatient ||
+      !shiftData.description
+    ) {
+      toast.error("Por favor, llene todos los campos", { duration: 3000 });
+      return;
+    }
+    postShifts(shiftData)
+      .then(() => {
+        setIsFormVisible(false);
+        setShiftData({
+          // date: moment(shiftData.date, "DD-MM-YYYY").format(),
+          date: "",
+          start_time: "",
+          selectPatient: "",
+          description: "",
+        });
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
   };
 
   // Función para manejar el evento de búsqueda
@@ -43,24 +73,36 @@ function Calendar() {
 
   const handleDeleteShifts = (e, id) => {
     e.preventDefault();
-    deleteShifts(id).then(() => {
-      getShifts();
-    });
+    deleteShifts(id);
   };
 
   // Función para manejar el evento de edición
   const handleEditShifts = (e) => {
     e.preventDefault();
-    const newData = { date, start_time, selectPatient, description };
-    putShifts(shiftToEdit._id, newData).then(() => {
-      setIsFormVisible(false);
-      setShiftToEdit(null);
-      setDate("");
-      setStartTime("");
-      setSelectedPatient("");
-      setDescription("");
-      getShifts();
-    });
+    if (
+      !shiftData.date ||
+      !shiftData.start_time ||
+      !shiftData.selectPatient ||
+      !shiftData.description
+    ) {
+      toast.error("Por favor, llene todos los campos", { duration: 3000 });
+      return;
+    }
+
+    putShifts(shiftToEdit._id, shiftData)
+      .then(() => {
+        setIsFormVisible(false);
+        setShiftToEdit(null);
+        setShiftData({
+          date: "",
+          start_time: "",
+          selectPatient: "",
+          description: "",
+        });
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
   };
 
   // Función para manejar el evento de cancelar la edición
@@ -72,6 +114,7 @@ function Calendar() {
 
   return (
     <div>
+      <Toaster />
       {/*Input de busqueda */}
       {/*Boton agregar Turnos */}
       <div className="my-4 flex justify-between">
@@ -89,10 +132,12 @@ function Calendar() {
             className="px-4 py-2 bg-[#3da9fc] text-[#fffffe] rounded-md"
             onClick={() => {
               setIsFormVisible(true);
-              setDate("");
-              setStartTime("");
-              setSelectedPatient("");
-              setDescription("");
+              setShiftData({
+                date: "",
+                start_time: "",
+                selectPatient: "",
+                description: "",
+              });
             }}
           >
             Agregar Turno
@@ -128,7 +173,7 @@ function Calendar() {
                 <td>{shift?.animal?.animalName}</td>
                 <td>{shift?.animal?.animalOwner}</td>
                 <td>{shift?.animal?.animalBreed}</td>
-                <td>{new Date(shift?.date).toLocaleDateString("es-AR")}</td>
+                <td>{moment(shift?.date).utc().format("DD/MM/YYYY")}</td>
                 <td>{shift?.start_time}</td>
                 <td>{shift?.description}</td>
                 <td>
@@ -136,10 +181,12 @@ function Calendar() {
                     onClick={() => {
                       setIsFormVisible(true);
                       setShiftToEdit(shift);
-                      setDate(shift.date);
-                      setStartTime(shift.start_time);
-                      setSelectedPatient(shift.selectPatient);
-                      setDescription(shift.description);
+                      setShiftData({
+                        date: shift?.date,
+                        start_time: shift?.start_time,
+                        selectPatient: shift?.patient?._id,
+                        description: shift?.description,
+                      });
                     }}
                     className="mr-10"
                   >
@@ -188,8 +235,10 @@ function Calendar() {
           <input
             type="text"
             className="px-2 py-2 border border-gray-300 rounded-md"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            value={shiftData.description}
+            onChange={(event) =>
+              setShiftData({ ...shiftData, description: event.target.value })
+            }
           />
         </div>
         <div className="mb-4">
@@ -200,8 +249,10 @@ function Calendar() {
             type="date"
             id="date"
             className="px-2 py-2 border border-gray-300 rounded-md"
-            value={date}
-            onChange={(event) => setDate(event.target.value)}
+            value={moment(shiftData.date).format("YYYY-MM-DD")}
+            onChange={(event) =>
+              setShiftData({ ...shiftData, date: event.target.value })
+            }
           />
         </div>
         <div className="mb-4">
@@ -212,8 +263,10 @@ function Calendar() {
             type="time"
             id="time"
             className="px-2 py-1 border border-gray-300 rounded-md"
-            value={start_time}
-            onChange={(event) => setStartTime(event.target.value)}
+            value={shiftData.start_time}
+            onChange={(event) =>
+              setShiftData({ ...shiftData, start_time: event.target.value })
+            }
           />
         </div>
         <div className="mb-4">
@@ -226,8 +279,10 @@ function Calendar() {
           <select
             id="selectedPatient"
             className="px-2 py-1 border border-gray-300 rounded-md"
-            value={selectPatient}
-            onChange={(event) => setSelectedPatient(event.target.value)}
+            value={shiftData.selectPatient}
+            onChange={(event) =>
+              setShiftData({ ...shiftData, selectPatient: event.target.value })
+            }
           >
             {/* Opciones para el selector de paciente */}
             {/* {shifts.map((patient) => (

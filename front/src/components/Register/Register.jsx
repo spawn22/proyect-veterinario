@@ -3,18 +3,26 @@ import { useAuthStore } from "../../store/auth";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 function Register() {
   const context = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const registerUser = useAuthStore((state) => state.registerUser);
+  const StateErrors = useAuthStore((state) => state.errors);
+
+  const [formFields, setFormFields] = useState({
+    name: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+
   const [formFilled, setFormFilled] = useState(false);
+ 
   const [errors, setErrors] = useState({
     name: "",
     lastName: "",
@@ -23,13 +31,11 @@ function Register() {
     password: "",
   });
 
-  const registerUser = useAuthStore((state) => state.registerUser);
-  const StateErrors = useAuthStore((state) => state.errors);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = { name, lastName, username, email, password };
-    await registerUser(data, navigate);
+
+    await registerUser(formFields, navigate, toast);
+    
   };
 
   useEffect(() => {
@@ -38,58 +44,81 @@ function Register() {
     }
   }, [context.isAuthenticated, navigate]);
 
+  useEffect(() => {
+    if (StateErrors.length > 0) {
+      StateErrors.map((error) => toast.error(error));
+    }
+  }, [StateErrors]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    setFormFields((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
     switch (name) {
       case "name":
-        setName(value);
         setErrors((prevState) => ({
           ...prevState,
-          name: value ? "" : "Name is required",
+          name: value ? "" : "Ingresa un Nombre",
         }));
+        if (!value) {
+          toast.error("Ingresa un Nombre", { duration: 2000 });
+        }
         break;
       case "lastName":
-        setLastName(value);
         setErrors((prevState) => ({
           ...prevState,
-          lastName: value ? "" : "Last name is required",
+          lastName: value ? "" : "Ingresa un Apellido",
         }));
+        if (!value) {
+          toast.error("Ingresa un Apellido", { duration: 2000 });
+        }
         break;
       case "username":
-        setUserName(value);
         setErrors((prevState) => ({
           ...prevState,
-          username: value ? "" : "Username is required",
+          username: value ? "" : "Ingresa un Usuario",
         }));
+        if (!value) {
+          toast.error("Ingresa un Usuario", { duration: 2000 });
+        }
         break;
       case "email":
-        setEmail(value);
         setErrors((prevState) => ({
           ...prevState,
-          email: value ? "" : "Email is required",
+          email: value ? "" : "Ingresa un Email",
         }));
+        if (!value) {
+          toast.error("Ingresa un Email", { duration: 2000 });
+        }
         break;
       case "password":
-        setPassword(value);
         setErrors((prevState) => ({
           ...prevState,
-          password: value ? "" : "Password is required",
+          password: value ? "" : "Ingresa una Contraseña",
         }));
+        if (!value) {
+          toast.error("Ingresa una Contraseña", { duration: 2000 });
+        }
         break;
       default:
         break;
     }
     // Verificar si todos los campos están llenos
     setFormFilled(
-      name !== "" &&
-        lastName !== "" &&
-        username !== "" &&
-        email !== "" &&
-        password !== ""
+      formFields.name !== "" &&
+        formFields.lastName !== "" &&
+        formFields.username !== "" &&
+        formFields.email !== "" &&
+        formFields.password !== ""
     );
   };
+
   return (
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
+      <Toaster />
+
       <Form
         onSubmit={handleSubmit}
         className="w-full max-w-md px-8 py-6 bg-white rounded-lg shadow-md"
@@ -98,11 +127,6 @@ function Register() {
           Registro
         </h1>
         <div className="mb-4">
-          {StateErrors.length > 0 && (
-            <p className="mt-2 text-lg font-bold text-red-500  mb-2 h-6">
-              {StateErrors}
-            </p>
-          )}
           <input
             type="text"
             name="name"
@@ -112,75 +136,42 @@ function Register() {
             }`}
             onChange={handleInputChange}
           />
-          {errors.name && (
-            <p className="mt-2 text-sm font-medium text-red-500">
-              {errors.name}
-            </p>
-          )}
         </div>
         <div className="mb-4">
           <input
             type="text"
             name="lastName"
             placeholder="Last Name"
-            className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.lastName ? "border-red-500" : ""
-            }`}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />
-          {errors.lastName && (
-            <p className="mt-2 text-sm font-medium text-red-500">
-              {errors.lastName}
-            </p>
-          )}
         </div>
         <div className="mb-4">
           <input
             type="text"
             name="username"
             placeholder="Username"
-            className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.username ? "border-red-500" : ""
-            }`}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />
-          {errors.username && (
-            <p className="mt-2 text-sm font-medium text-red-500">
-              {errors.username}
-            </p>
-          )}
         </div>
         <div className="mb-4">
           <input
             type="email"
             name="email"
             placeholder="Email"
-            className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.email ? "border-red-500" : ""
-            }`}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />
-          {errors.email && (
-            <p className="mt-2 text-sm font-medium text-red-500">
-              {errors.email}
-            </p>
-          )}
         </div>
         <div className="mb-4">
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.password ? "border-red-500" : ""
-            }`}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />
-          {errors.password && (
-            <p className="mt-2 text-sm font-medium text-red-500">
-              {errors.password}
-            </p>
-          )}
         </div>
         <Link
           to="/login"
@@ -188,14 +179,12 @@ function Register() {
         >
           ¿Ya estás registrado? Inicia sesión aquí
         </Link>
-        {/* <Link
-          to="/login"
-          className="block mt-4 text-blue-500 hover:text-blue-700"
-        >
-        </Link> */}
+
         <button
           type="submit"
-          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`"w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            !formFilled ? "opacity-50 cursor-not-allowed w-full " : "w-full "
+          }`}
           disabled={!formFilled}
         >
           Registro
