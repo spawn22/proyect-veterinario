@@ -1,11 +1,12 @@
-import ShiftCard from "./ShiftCard"
-import ShiftForm from "./ShiftForm"
+import AnimalCard from "./AnimalCard"
+import AnimalForm from "./AnimalForm"
+
 
 const Home = () => {
   return (
     <>
-    <ShiftForm/>
-    <ShiftCard/>
+    <AnimalForm/>
+    <AnimalCard/>
     </>
   )
 }
