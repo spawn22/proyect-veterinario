@@ -2,31 +2,31 @@ import mongoose from "mongoose";
 
 const animalSchema = new mongoose.Schema(
   {
-    animalName: {
+    name: {
       type: String,
       required: true,
     },
-    animalOwner: {
+    owner: {
       type: String,
       required: true,
     },
-    animalType: {
+    type: {
       type: String,
       required: true,
     },
-    animalAge: {
+    age: {
       type: Number,
       required: true,
     },
-    animalGender: {
+    gender: {
       type: String,
       required: true,
     },
-    animalBreed: {
+    breed: {
       type: String,
       required: true,
     },
-    animalWeight: {
+    weight: {
       type: Number,
       required: true,
     },
