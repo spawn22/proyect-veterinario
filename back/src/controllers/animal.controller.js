@@ -2,23 +2,26 @@ import Animal from "../models/animal.model.js";
 
 export const createPatientAnimal = async (req, res) => {
   const {
-    animalName,
-    animalOwner,
-    animalType,
-    animalAge,
-    animalGender,
-    animalBreed,
-    animalWeight,
+    name,
+    owner,
+    type,
+    age,
+    gender,
+    breed,
+    weight,
   } = req.body;
+  // console.log(req.body);
+  // console.log(name);
 
   const newPatient = new Animal({
-    animalName,
-    animalOwner,
-    animalType,
-    animalAge,
-    animalGender,
-    animalBreed,
-    animalWeight,
+    name,
+    owner,
+    type,
+    age,
+    gender,
+    breed,
+    weight,
+    // // user:"64c145f208c2506baba61430",
     user: req.user.id,
   });
   try {

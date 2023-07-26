@@ -1,29 +1,29 @@
 import { z } from "zod";
 
 export const createAnimalSchema = z.object({
-  animalName: z.string({
+  name: z.string({
     required_error: "Animal Name is required",
   }),
-  animalOwner: z.string({
+  owner: z.string({
     required_error: "Animal Owner is required",
   }),
-  animalType: z.string({
+  type: z.string({
     required_error: "Animal Type is required",
   }),
-  animalAge: z
+  age: z
     .number({
       required_error: "Animal Age is required",
     })
     .max(30, {
       message: "Animal Age must be less than 30",
     }),
-  animalGender: z.string({
+  gender: z.string({
     required_error: "Animal Gender is required",
   }),
-  animalBreed: z.string({
+  breed: z.string({
     required_error: "Animal Breed is required",
   }),
-  animalWeight: z.number({
+  weight: z.number({
     required_error: "Animal Weight is required",
   }),
 });

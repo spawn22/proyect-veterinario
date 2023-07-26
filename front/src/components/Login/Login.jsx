@@ -1,9 +1,13 @@
 import { Form, Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { AuthContext } from "../../context/authContext";
+import { AuthContext } from "../../context/AuthContext";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import toast, { Toaster } from "react-hot-toast";
+=======
+
+>>>>>>> home
 function Login() {
   const context = useContext(AuthContext);
 

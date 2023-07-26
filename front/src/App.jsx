@@ -1,9 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
+<<<<<<< HEAD
 import Calendar from "./components/Calendar/Calendar";
 import { AuthProvider } from "./context/authContext";
+=======
+import { AuthProvider } from "./context/AuthContext";
+>>>>>>> home
 import "./App.css";
+import Home from "./components/Home/Home";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +21,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <h1>Home</h1>,
+    element: <Home/>,
   },
   {
     path: "/calendar",
