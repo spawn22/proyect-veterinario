@@ -1,13 +1,10 @@
-import { Form, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/authContext";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 function Register() {
-  const context = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const registerUser = useAuthStore((state) => state.registerUser);
@@ -22,7 +19,7 @@ function Register() {
   });
 
   const [formFilled, setFormFilled] = useState(false);
- 
+
   const [errors, setErrors] = useState({
     name: "",
     lastName: "",
@@ -35,14 +32,7 @@ function Register() {
     event.preventDefault();
 
     await registerUser(formFields, navigate, toast);
-    
   };
-
-  useEffect(() => {
-    if (context.isAuthenticated) {
-      navigate("/home");
-    }
-  }, [context.isAuthenticated, navigate]);
 
   useEffect(() => {
     if (StateErrors.length > 0) {
@@ -119,7 +109,7 @@ function Register() {
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
       <Toaster />
 
-      <Form
+      <form
         onSubmit={handleSubmit}
         className="w-full max-w-md px-8 py-6 bg-white rounded-lg shadow-md"
       >
@@ -189,7 +179,7 @@ function Register() {
         >
           Registro
         </button>
-      </Form>
+      </form>
     </div>
   );
 }

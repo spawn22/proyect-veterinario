@@ -1,11 +1,10 @@
-import { Form, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { AuthContext } from "../../context/authContext";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 function Login() {
-  const context = useContext(AuthContext);
+  
 
   const navigate = useNavigate();
 
@@ -29,11 +28,7 @@ function Login() {
     await loginUser(formFields, navigate, toast);
   };
 
-  useEffect(() => {
-    if (context.isAuthenticated) {
-      navigate("/home");
-    }
-  }, [context.isAuthenticated, navigate]);
+ 
 
   useEffect(() => {
     if (StateErrors && StateErrors.length > 0) {
@@ -78,7 +73,7 @@ function Login() {
   return (
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
       <Toaster />
-      <Form
+      <form
         onSubmit={handleSubmit}
         className="w-full max-w-md px-8 py-6 bg-white rounded-lg shadow-md"
       >
@@ -117,7 +112,7 @@ function Login() {
         >
           Inicia Sesion
         </button>
-      </Form>
+      </form>
     </div>
   );
 }

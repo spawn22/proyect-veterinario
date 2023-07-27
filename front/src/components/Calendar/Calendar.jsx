@@ -22,19 +22,20 @@ function Calendar() {
   const [shiftToEdit, setShiftToEdit] = useState(null);
 
   useEffect(() => {
-    toast.promise(
-      getShifts(),
-      {
-        loading: "Cargando turnos",
-        success: "Turnos cargados",
-        error: "Error al cargar turnos",
-      },
-      {
-        success: {
-          duration: 3000,
+    setTimeout(() => {
+      toast.promise(
+        getShifts(),
+        {
+          success: "Turnos cargados",
+          error: "Error al cargar turnos",
         },
-      }
-    );
+        {
+          success: {
+            duration: 3000,
+          },
+        }
+      );
+    }, 2000); 
   }, [getShifts]);
 
   // Función para manejar el evento de agregar turno
