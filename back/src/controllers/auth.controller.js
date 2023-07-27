@@ -5,7 +5,7 @@ import { TOKEN_SECRET } from "../config/config.js";
 import { createAccessToken, createRefreshToken } from "../libs/jwt.js";
 
 export const register = async (req, res) => {
-  const { name, lastName, email, username, password } = req.body;
+  const { name, lastName, email, username, password, gender } = req.body;
   try {
     const passwordHash = await bcrypt.hash(password, 10);
 
@@ -21,6 +21,7 @@ export const register = async (req, res) => {
       lastName,
       username,
       email,
+      gender,
       password: passwordHash,
     });
 
@@ -33,6 +34,7 @@ export const register = async (req, res) => {
       lastName: userSaved.lastName,
       username: userSaved.username,
       email: userSaved.email,
+      gender: userSaved.gender,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,7 +46,7 @@ export const login = async (req, res) => {
   try {
     const userFound = await User.findOne({ email });
 
-    if (!userFound) return res.status(400).json({ message: "User not found" });
+    if (!userFound) return res.status(400).json({ message: "Usuario no encontrador, Porfavor Registrese" });
     const passwordCompare = await bcrypt.compare(password, userFound.password);
 
     if (!passwordCompare)
@@ -138,6 +140,7 @@ export const profile = async (req, res) => {
       name: userFound.name,
       lastName: userFound.lastName,
       image: userFound.image,
+      gender: userFound.gender,
     });
   } catch (error) {
     console.error(error);
@@ -145,31 +148,4 @@ export const profile = async (req, res) => {
   }
 };
 
-export const putProfile = async (req, res) => {
-  try {
-    if (!req.user.id)
-      return res.status(400).json({ message: "User ID not provided" });
-    const userFound = await User.findById(req.user.id);
 
-    if (!userFound) return res.status(400).json({ message: "User not found" });
-
-    const { name, lastName, image } = req.body;
-
-    userFound.name = name || userFound.name;
-    userFound.lastName = lastName || userFound.lastName;
-    userFound.image = image || userFound.image;
-
-    const userUpdated = await userFound.save();
-
-    return res.json({
-      id: userUpdated._id,
-      username: userUpdated.username,
-      email: userUpdated.email,
-      name: userUpdated.name,
-      lastName: userUpdated.lastName,
-      image: userUpdated.image,
-    });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};

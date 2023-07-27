@@ -1,5 +1,17 @@
 import { useProfileStore } from "../../store/profile";
 import { useEffect } from "react";
+
+const imageGender = [
+  {
+    Masculino:
+      "https://res.cloudinary.com/ddyk63iig/image/upload/v1690499507/depositphotos_272242022-stock-illustration-veterinary-doctor-with-dogs-avatar_tcn0cr.webp",
+  },
+  {
+    Femenino:
+      "https://res.cloudinary.com/ddyk63iig/image/upload/v1690499507/30121536-ilustraci%C3%B3n-de-un-veterinario-mujer-sosteniendo-un-perro_yazalu.webp",
+  },
+];
+
 function Profile() {
   const getProfileData = useProfileStore((state) => state.getProfileData);
   const profile = useProfileStore((state) => state.profile);
@@ -8,6 +20,9 @@ function Profile() {
     getProfileData();
   }, [getProfileData]);
 
+  const genderImage = imageGender.find((gender) => gender[profile.gender]);
+  const imageSrc = genderImage ? genderImage[profile.gender] : null;
+
   return (
     <div className="flex items-center h-screen w-full justify-center">
       <div className="max-w-xl">
@@ -15,7 +30,7 @@ function Profile() {
           <div className="photo-wrapper p-2">
             <img
               className="w-[70%] h-[70%] rounded-full mx-auto"
-              src={profile.image}
+              src={imageSrc}
               alt={profile.name}
             />
           </div>

@@ -13,6 +13,5 @@ export const useProfileStore = create((set) => ({
       console.log(error);
       set({ errors: error.res.data });
     }
-    
   },
 }));

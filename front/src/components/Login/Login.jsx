@@ -9,8 +9,6 @@ function Login() {
   const navigate = useNavigate();
 
   const loginUser = useAuthStore((state) => state.loginUser);
-  const StateErrors = useAuthStore((state) => state.errors);
-  const MessageError = useAuthStore((state) => state.messageError);
 
   const [formFields, setFormFields] = useState({
     email: "",
@@ -33,14 +31,6 @@ function Login() {
       navigate("/home");
     }
   }, [context.isAuthenticated, navigate]);
-
-  useEffect(() => {
-    if (StateErrors && StateErrors.length > 0) {
-      StateErrors.map((error) => toast.error(error));
-    } else if (MessageError) {
-      toast.error(MessageError);
-    }
-  }, [StateErrors, MessageError]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -104,7 +94,10 @@ function Login() {
             onChange={handleInputChange}
           />
         </div>
-        <Link to="/" className="block mt-5 text-blue-500 hover:text-blue-700 ">
+        <Link
+          to="/register"
+          className="block mt-5 text-blue-500 hover:text-blue-700 "
+        >
           ¿No estás registrado? Regístrate aquí
         </Link>
         <button

@@ -3,13 +3,12 @@ import instance from "./interceptors/config";
 
 export const useAuthStore = create((set) => ({
   user: null,
-  errors: [],
-  messageError: "",
   registerUser: async (data, navigate, toast) => {
     try {
       const response = await instance.post("/register", data);
       if (response.status === 200) {
         const user = response.data ? response.data : null;
+        console.log(user);
         set(() => ({ user }));
         toast.success("Usuario Registrado", { duration: 3000 });
         setInterval(() => {
@@ -20,7 +19,15 @@ export const useAuthStore = create((set) => ({
         throw new Error("Registration failed: Invalid input data");
       }
     } catch (error) {
-      set(() => ({ errors: error.response.data.error }));
+      console.log(error);
+      if (error.response.data.message) {
+        toast.error(error.response.data.message, { duration: 3000 });
+      }
+      if (error.response.data.error) {
+        error.response.data.error.forEach((err) => {
+          toast.error(err, { duration: 2000 });
+        });
+      }
     }
   },
   loginUser: async (data, navigate, toast) => {
@@ -38,9 +45,15 @@ export const useAuthStore = create((set) => ({
         throw new Error("Error al iniciar sesión");
       }
     } catch (error) {
-      console.error(error);
-      set(() => ({ errors: error.response.data.error }));
-      set(() => ({ messageError: error.response.data.message }));
+      console.log(error);
+      if (error.response.data.message) {
+        toast.error(error.response.data.message, { duration: 3000 });
+      }
+      if (error.response.data.error) {
+        error.response.data.error.forEach((err) => {
+          toast.error(err, { duration: 2000 });
+        });
+      }
     }
   },
   verify: async () => instance.get("/verify"),

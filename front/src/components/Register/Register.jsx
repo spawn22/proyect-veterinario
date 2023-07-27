@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 
 function Register() {
-  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   const registerUser = useAuthStore((state) => state.registerUser);
-  const StateErrors = useAuthStore((state) => state.errors);
 
   const [formFields, setFormFields] = useState({
     name: "",
@@ -18,6 +15,7 @@ function Register() {
     username: "",
     email: "",
     password: "",
+    gender: "",
   });
 
   const [formFilled, setFormFilled] = useState(false);
@@ -28,6 +26,7 @@ function Register() {
     username: "",
     email: "",
     password: "",
+    gender: "",
   });
 
   const handleSubmit = async (event) => {
@@ -35,18 +34,6 @@ function Register() {
 
     await registerUser(formFields, navigate, toast);
   };
-
-  useEffect(() => {
-    if (context.isAuthenticated) {
-      navigate("/home");
-    }
-  }, [context.isAuthenticated, navigate]);
-
-  useEffect(() => {
-    if (StateErrors.length > 0) {
-      StateErrors.map((error) => toast.error(error));
-    }
-  }, [StateErrors]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -89,6 +76,15 @@ function Register() {
         }));
         if (!value) {
           toast.error("Ingresa un Email", { duration: 2000 });
+        }
+        break;
+      case "gender":
+        setErrors((prevState) => ({
+          ...prevState,
+          gender: value ? "" : "Selecciona un Género",
+        }));
+        if (!value) {
+          toast.error("Selecciona un Género", { duration: 2000 });
         }
         break;
       case "password":
@@ -161,6 +157,18 @@ function Register() {
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />
+        </div>
+        <div className="mb-4">
+          <select
+            name="gender"
+            value={formFields.gender}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Selecciona un Género</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+          </select>
         </div>
         <div className="mb-4">
           <input
