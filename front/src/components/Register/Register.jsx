@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 
 function Register() {
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   const registerUser = useAuthStore((state) => state.registerUser);
@@ -33,6 +35,12 @@ function Register() {
 
     await registerUser(formFields, navigate, toast);
   };
+
+  useEffect(() => {
+    if (context.isAuthenticated) {
+      navigate("/home");
+    }
+  }, [context.isAuthenticated, navigate]);
 
   useEffect(() => {
     if (StateErrors.length > 0) {

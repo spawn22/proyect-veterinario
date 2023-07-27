@@ -8,6 +8,14 @@ export const register = async (req, res) => {
   const { name, lastName, email, username, password } = req.body;
   try {
     const passwordHash = await bcrypt.hash(password, 10);
+
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "User with this email or username already exists." });
+    }
+
     const newUser = new User({
       name,
       lastName,
@@ -75,46 +83,63 @@ export const refreshToken = async (req, res) => {
 
   try {
     const decodedToken = await verifyToken(refreshToken, TOKEN_SECRET);
-    const accessToken = await createAccessToken({ id: decodedToken.id });
-    const newRefreshToken = await createRefreshToken({ id: decodedToken.id });
+    const user = await User.findById(decodedToken.id);
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    const accessToken = await createAccessToken({ id: user._id });
+    const newRefreshToken = await createRefreshToken({ id: user._id });
 
     res.cookie("accessToken", accessToken, { httpOnly: true });
     res.cookie("refreshToken", newRefreshToken, { httpOnly: true });
 
-    res.json({ accessToken });
+    res
+      .cookie("accessToken", accessToken, { httpOnly: true })
+      .json({ message: "Access token refreshed" });
   } catch (error) {
-    res.status(403).json({ message: "Invalid refresh token" });
+    res.status(403).json({
+      message:
+        "The refresh token is invalid or has expired. Please log in again.",
+    });
   }
 };
 
 export const verifyToken = async (req, res) => {
   const { accessToken } = req.cookies;
-  if (!accessToken) return res.send(false);
+  if (!accessToken)
+    return res.status(401).json({ message: "No access token provided" });
 
-  jwt.verify(accessToken, TOKEN_SECRET, async (error, user) => {
-    if (error) return res.sendStatus(401);
-
+  try {
+    const user = await jwt.verify(accessToken, TOKEN_SECRET);
     const userFound = await User.findById(user.id);
-    if (!userFound) return res.sendStatus(401);
-
+    if (!userFound) return res.status(401).json({ message: "User not found" });
     return res.json({
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
     });
-  });
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
 };
 
 export const profile = async (req, res) => {
-  const userFound = await User.findById(req.user.id);
+  try {
+    if (!req.user.id)
+      return res.status(400).json({ message: "User ID not provided" });
+    const userFound = await User.findById(req.user.id);
 
-  if (!userFound) return res.status(400).json({ message: "User not found" });
+    if (!userFound) return res.status(400).json({ message: "User not found" });
 
-  return res.json({
-    id: userFound._id,
-    username: userFound.username,
-    email: userFound.email,
-    name: userFound.name,
-    lastName: userFound.lastName,
-  });
+    return res.json({
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+      name: userFound.name,
+      lastName: userFound.lastName,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
 };

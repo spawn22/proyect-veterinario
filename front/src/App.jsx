@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Calendar from "./components/Calendar/Calendar";
-import { AuthProvider } from "./context/authContext";
+import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import "./App.css";
 

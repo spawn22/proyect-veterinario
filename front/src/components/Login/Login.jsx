@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { useState, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 function Login() {
-  
-
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   const loginUser = useAuthStore((state) => state.loginUser);
@@ -28,7 +28,11 @@ function Login() {
     await loginUser(formFields, navigate, toast);
   };
 
- 
+  useEffect(() => {
+    if (context.isAuthenticated) {
+      navigate("/home");
+    }
+  }, [context.isAuthenticated, navigate]);
 
   useEffect(() => {
     if (StateErrors && StateErrors.length > 0) {
