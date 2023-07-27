@@ -4,6 +4,7 @@ import Login from "./components/Login/Login";
 import Calendar from "./components/Calendar/Calendar";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Profile from "./components/Profile/Profile";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 
           <Route element={<ProtectedRoute />}>
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>
