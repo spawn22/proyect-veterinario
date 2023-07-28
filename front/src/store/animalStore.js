@@ -1,27 +1,29 @@
 import { create } from "zustand";
-import axios from "axios";
+import instance from "./interceptors/config";
 
-export const useAnimalStore = create((set) => ({
-  patient: "null",
-  registerAnimal: async (data) => {
-    console.log(data);
+export const useAnimalStore = create((set, get) => ({
+  patients: [],
+  patient:null,
+
+  getPatients: async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/patient",
-        data,
-        { withCredentials: true }
-      );
-      console.log(response);
-      if (response.status === 200) {
-        const patient = response.data;
-        console.log(patient);
-        set(() => ({ patient }));
-        return patient;
-      } else {
-        throw new Error("Error al registrar");
-      }
+      const res = await instance.get("/patient");
+      const data = res.data;
+      set({ patients: data });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  registerAnimal: async (data) => {
+    try {
+      const res = await instance.post("/patient", data);
+      const patient= res.data
+      return patient
     } catch (error) {
       set(() => ({ errors: error.response.data.error }));
+    }
+    finally {
+      get().getPatients();
     }
   },
 }));

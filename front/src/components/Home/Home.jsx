@@ -1,13 +1,13 @@
-import AnimalCard from "./AnimalCard"
-import AnimalForm from "./AnimalForm"
-
+import AnimalCards from "./AnimalCards";
+import AnimalForm from "./AnimalForm";
 
 const Home = () => {
   return (
-    <>
-    <AnimalForm/>
-    <AnimalCard/>
-    </>
-  )
-}
-export default Home
+    // <main className="flex justify-center items-center h-screen max-h-[55rem]">
+    <main className="container md:m-auto grid md:grid-cols-2 justify-center h-screen max-h-[55rem] gap-1">
+      <AnimalForm />
+      <AnimalCards />
+    </main>
+  );
+};
+export default Home;

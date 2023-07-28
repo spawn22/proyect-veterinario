@@ -1,25 +1,37 @@
+// import { useContext } from "react";
 import { Form } from "react-router-dom";
 import useErrors from "../../hooks/useErrors";
 import { useAnimal, initialState } from "../../hooks/useAnimal";
 import { useAnimalStore } from "../../store/animalStore";
+// import { AuthContext } from "../../context/AuthContext";
+
 
 const AnimalForm = () => {
+  // const context = useContext(AuthContext);
+  // console.log(context);
+  
   const { animal, setAnimal } = useAnimal();
   const { name, owner, type, age, gender, breed, weight } = animal;
+
   const { error, setError } = useErrors();
 
   const registerAnimal = useAnimalStore((state) => state.registerAnimal);
 
   const handleChange = (event) => {
+    // console.log(typeof event.target.value);
     setAnimal({
       ...animal,
       [event.target.name]: event.target.value,
     });
   };
 
+
+  
+  const data = { name, owner, type, age:Number(age), gender, breed, weight:Number(weight) };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //Validar
+    //Valida que estén llenos todos loi inputs
     if (
       !name.trim() ||
       !owner.trim() ||
@@ -32,9 +44,7 @@ const AnimalForm = () => {
       setError(true);
       return;
     }
-
-    const data = { name, owner, type, age, gender, breed, weight };
-    console.log(data);
+   
     await registerAnimal(data)
 
     setError(false);
@@ -43,7 +53,8 @@ const AnimalForm = () => {
     setAnimal(initialState);
   };
   return (
-    <div className="flex justify-center items-center h-screen max-h-[55rem]">
+    // <div className="flex justify-center items-center h-screen max-h-[55rem]">
+    <div className="flex justify-center items-center ">
       <Form
         onSubmit={handleSubmit}
         className="w-full max-w-md px-8 py-6 bg-white rounded-lg shadow-md"
