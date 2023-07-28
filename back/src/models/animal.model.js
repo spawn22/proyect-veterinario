@@ -40,3 +40,4 @@ const animalSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Animal", animalSchema);
+

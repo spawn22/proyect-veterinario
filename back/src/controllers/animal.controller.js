@@ -10,8 +10,6 @@ export const createPatientAnimal = async (req, res) => {
     breed,
     weight,
   } = req.body;
-  // console.log(req.body);
-  // console.log(name);
 
   const newPatient = new Animal({
     name,
@@ -21,7 +19,6 @@ export const createPatientAnimal = async (req, res) => {
     gender,
     breed,
     weight,
-    // // user:"64c145f208c2506baba61430",
     user: req.user.id,
   });
   try {
@@ -38,6 +35,7 @@ export const getAllPatientsAnimals = async (req, res) => {
         user: req.user.id
     }).populate("user");
     res.status(200).json(allPatients);
+
   } catch (error) {
     res.status(500).json(error);
   }
