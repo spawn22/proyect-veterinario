@@ -6,11 +6,13 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Profile from "./components/Profile/Profile";
 import "./App.css";
+import Menu from "./components/Common/Menu";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+      <Menu></Menu>
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
