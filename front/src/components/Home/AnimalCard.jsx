@@ -1,5 +1,9 @@
+import { useAnimalStore } from "../../store/animalStore";
+
 const AnimalCard = ({patient}) => {
-  const { name, owner, type, age, gender, breed, weight } = patient;
+  const {_id, name, owner, type, age, gender, breed, weight } = patient;
+const {deleteAnimal }=useAnimalStore()
+ 
 
   return (
     <div className="bg-zinc-500 p-2">
@@ -26,7 +30,7 @@ const AnimalCard = ({patient}) => {
     </p>
     <button
       className="bg-red-600 text-zinc-50 p-2 "
-      onClick={() => deletePatient(patient.id)}
+      onClick={() => deleteAnimal(_id)}
     >
       Eliminar &times;
     </button>

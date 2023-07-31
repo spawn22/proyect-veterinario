@@ -25,17 +25,8 @@ export const useAuthStore = create((set) => ({
   },
   loginUser: async (data, navigate, toast) => {
     try {
-<<<<<<< HEAD
       const response = await instance.post("/login", data);
       if (response.status === 200) {
-=======
-      const response = await axios.post(
-        "http://localhost:3000/api/login",
-        data,
-        { withCredentials: true }
-        );
-        if (response.status === 200) {
->>>>>>> home
         const user = response.data;
         set(() => ({ user }));
         toast.success("Usuario Logeado Exitosamente", { duration: 3000 });
