@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
+import { useContext } from "react";
+import { useAuthStore } from "../../store/auth";
 
 const Menu = () => {
+    const context = useContext(AuthContext);
+    console.log('desde el navbar' + context.isAuthenticated)
+    const logoutUser = useAuthStore((state) => state.logout);
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -58,7 +64,12 @@ const Menu = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <NavLink className="btn" to={'/login'}>Login</NavLink>
+        {
+            !context.isAuthenticated? 
+            <NavLink className="btn" to={'/login'}>Login</NavLink>
+            :
+            <NavLink className="btn" to={'/login'} onClick={logoutUser}>Logout</NavLink>
+        }
       </div>
     </div>
   );
