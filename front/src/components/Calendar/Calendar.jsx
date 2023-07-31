@@ -22,7 +22,7 @@ function Calendar() {
   const [shiftToEdit, setShiftToEdit] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeOutId = setTimeout(() => {
       toast.promise(
         getShifts(),
         {
@@ -36,6 +36,7 @@ function Calendar() {
         }
       );
     }, 2000);
+    return () => clearTimeout(timeOutId);
   }, [getShifts]);
 
   // Función para manejar el evento de agregar turno
@@ -227,7 +228,14 @@ function Calendar() {
                             />
                           </button>
                           <button
-                            onClick={(e) => handleDeleteShifts(e, shift?._id)}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if(window.confirm("¿Desea eliminar este turno?")){
+                                handleDeleteShifts(e, shift?._id);
+                                
+                              }
+                            }
+                            }
                             className="mr-2"
                           >
                             <AiFillDelete

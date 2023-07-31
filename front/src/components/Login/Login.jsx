@@ -24,6 +24,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await loginUser(formFields, navigate, toast);
+    context.setIsAuthenticated(true);
   };
 
   useEffect(() => {
