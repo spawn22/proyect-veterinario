@@ -46,7 +46,10 @@ export const login = async (req, res) => {
   try {
     const userFound = await User.findOne({ email });
 
-    if (!userFound) return res.status(400).json({ message: "Usuario no encontrador, Porfavor Registrese" });
+    if (!userFound)
+      return res
+        .status(400)
+        .json({ message: "Usuario no encontrador, Porfavor Registrese" });
     const passwordCompare = await bcrypt.compare(password, userFound.password);
 
     if (!passwordCompare)
@@ -63,6 +66,7 @@ export const login = async (req, res) => {
       username: userFound.username,
       name: userFound.name,
       lastName: userFound.lastName,
+      gender: userFound.gender,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -147,5 +151,3 @@ export const profile = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
-

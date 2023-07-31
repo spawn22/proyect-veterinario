@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
 import { AuthContext } from "../../context/AuthContext";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 function Login() {
@@ -23,15 +23,18 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await loginUser(formFields, navigate, toast);
-    context.setIsAuthenticated(true);
+    await loginUser(formFields, toast, () => {
+      // La función se ejecuta solo si el inicio de sesión es exitoso
+      setTimeout(() => {
+        context.setIsAuthenticated(true);
+        navigate("/home");
+      }, 3000); // Espera 3 segundos antes de redirigir al usuario al home
+    });
   };
 
-  useEffect(() => {
-    if (context.isAuthenticated) {
-      navigate("/home");
-    }
-  }, [context.isAuthenticated, navigate]);
+  if (context.isAuthenticated) {
+    navigate("/home");
+  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
