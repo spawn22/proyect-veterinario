@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Profile from "./pages/Profile/Profile";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<h1>Home</h1>} />
+            <Route path="/home" element={<Home/>} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
