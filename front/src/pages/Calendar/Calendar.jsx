@@ -4,7 +4,7 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
 import moment from "moment";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Label from "../../components/Label";
 
 function Calendar() {
@@ -25,21 +25,19 @@ function Calendar() {
   const [shiftToEdit, setShiftToEdit] = useState(null);
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => {
-      toast.promise(
-        getShifts(),
-        {
-          success: "Turnos cargados",
-          error: "Error al cargar turnos",
+    toast.promise(
+      getShifts(),
+      {
+        loading: "Cargando turnos...",
+        success: "Turnos cargados",
+        error: "Error al cargar turnos",
+      },
+      {
+        success: {
+          duration: 3000,
         },
-        {
-          success: {
-            duration: 3000,
-          },
-        }
-      );
-    }, 2000);
-    return () => clearTimeout(timeOutId);
+      }
+    );
   }, [getShifts]);
 
   // Función para manejar el evento de agregar turno
@@ -119,7 +117,6 @@ function Calendar() {
 
   return (
     <div>
-      <Toaster />
       {/*Input de busqueda */}
       {/*Boton agregar Turnos */}
       <div className="my-4 flex justify-between">

@@ -5,12 +5,14 @@ import Calendar from "./pages/Calendar/Calendar";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Profile from "./pages/Profile/Profile";
+import { Toaster } from "react-hot-toast";
 import "./App.css";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+          <Toaster />
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

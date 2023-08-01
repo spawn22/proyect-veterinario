@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input";
 import Button from "../../components/Button";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 function Login() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
@@ -22,6 +22,10 @@ function Login() {
     password: "",
   });
 
+  if (context.isAuthenticated) {
+    navigate("/home");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await loginUser(formFields, toast, () => {
@@ -32,10 +36,6 @@ function Login() {
       }, 3000); // Espera 3 segundos antes de redirigir al usuario al home
     });
   };
-
-  if (context.isAuthenticated) {
-    navigate("/home");
-  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -50,7 +50,7 @@ function Login() {
           email: value ? "" : "Ingresa un Email",
         }));
         if (!value) {
-          toast.error("Ingresa un Email", { duration: 2000 });
+          toast.error("Ingresa un Email");
         }
         break;
       case "password":
@@ -59,7 +59,7 @@ function Login() {
           password: value ? "" : "Ingresa una Contraseña",
         }));
         if (!value) {
-          toast.error("Ingresa una Contraseña", { duration: 2000 });
+          toast.error("Ingresa una Contraseña", { duration: 1000 });
         }
         break;
       default:
@@ -70,7 +70,6 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
-      <Toaster />
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md px-8 py-6 bg-white rounded-lg shadow-md"

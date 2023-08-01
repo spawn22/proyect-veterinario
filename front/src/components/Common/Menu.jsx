@@ -2,11 +2,17 @@ import { NavLink } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import { useContext } from "react";
 import { useAuthStore } from "../../store/auth";
-
+import toast from "react-hot-toast";
 const Menu = () => {
-    const context = useContext(AuthContext);
-    console.log('desde el navbar' + context.isAuthenticated)
-    const logoutUser = useAuthStore((state) => state.logout);
+  const context = useContext(AuthContext);
+
+  const logoutUser = useAuthStore((state) => state.logout);
+
+  const handleClick = async () => {
+    await logoutUser();
+    context.setIsAuthenticated(false);
+    toast.success("Logout exitoso");
+  };
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -32,16 +38,16 @@ const Menu = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <NavLink to={'/home'}>Inicio</NavLink>
+              <NavLink to={"/home"}>Inicio</NavLink>
             </li>
             <li>
-              <NavLink to={'/calendar'}>Calendario</NavLink>
+              <NavLink to={"/calendar"}>Calendario</NavLink>
             </li>
             <li>
-              <NavLink to={'/'}>Praciente</NavLink>
+              <NavLink to={"/"}>Praciente</NavLink>
             </li>
             <li>
-              <NavLink to={'/Profile'}>Perfil</NavLink>
+              <NavLink to={"/Profile"}>Perfil</NavLink>
             </li>
           </ul>
         </div>
@@ -49,27 +55,30 @@ const Menu = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-        <li>
-              <NavLink to={'/home'}>Inicio</NavLink>
-            </li>
-            <li>
-              <NavLink to={'/calendar'}>Calendario</NavLink>
-            </li>
-            <li>
-              <NavLink to={'/'}>Praciente</NavLink>
-            </li>
-            <li>
-              <NavLink to={'/Profile'}>Perfil</NavLink>
-            </li>
+          <li>
+            <NavLink to={"/home"}>Inicio</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/calendar"}>Calendario</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/"}>Praciente</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/Profile"}>Perfil</NavLink>
+          </li>
         </ul>
       </div>
       <div className="navbar-end">
-        {
-            !context.isAuthenticated? 
-            <NavLink className="btn" to={'/login'}>Login</NavLink>
-            :
-            <NavLink className="btn" to={'/login'} onClick={logoutUser}>Logout</NavLink>
-        }
+        {!context.isAuthenticated ? (
+          <NavLink className="btn" to={"/login"}>
+            Login
+          </NavLink>
+        ) : (
+          <NavLink className="btn" to={"/login"} onClick={handleClick}>
+            Logout
+          </NavLink>
+        )}
       </div>
     </div>
   );

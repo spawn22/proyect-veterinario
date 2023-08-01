@@ -1,19 +1,17 @@
 import { create } from "zustand";
 import instance from "./interceptors/config";
-
+import Cookies from "js-cookie";
 export const useAuthStore = create((set) => ({
   user: null,
-  registerUser: async (data, navigate, toast) => {
+  registerUser: async (data, toast) => {
     try {
       const response = await instance.post("/register", data);
       if (response.status === 200) {
         const user = response.data ? response.data : null;
         console.log(user);
         set(() => ({ user }));
-        toast.success("Usuario Registrado", { duration: 3000 });
-        setInterval(() => {
-          navigate("/login");
-        }, 3000);
+        toast.success("Usuario Registrado");
+
         return user;
       } else {
         throw new Error("Registration failed: Invalid input data");
@@ -21,11 +19,11 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       console.log(error);
       if (error.response.data.message) {
-        toast.error(error.response.data.message, { duration: 3000 });
+        toast.error(error.response.data.message);
       }
       if (error.response.data.error) {
         error.response.data.error.forEach((err) => {
-          toast.error(err, { duration: 2000 });
+          toast.error(err);
         });
       }
     }
@@ -38,7 +36,7 @@ export const useAuthStore = create((set) => ({
         const user = response.data;
         console.log(user);
         set(() => ({ user }));
-        toast.success("Usuario Logeado Exitosamente", { duration: 3000 });
+        toast.success("Usuario Logeado Exitosamente");
         onSuccess(); // Llamamos a onSuccess si el inicio de sesión es exitoso
         return user;
       } else {
@@ -47,11 +45,11 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       console.log(error);
       if (error.response.data.message) {
-        toast.error(error.response.data.message, { duration: 3000 });
+        toast.error(error.response.data.message);
       }
       if (error.response.data.error) {
         error.response.data.error.forEach((err) => {
-          toast.error(err, { duration: 2000 });
+          toast.error(err);
         });
       }
     }
@@ -59,6 +57,8 @@ export const useAuthStore = create((set) => ({
   verify: async () => instance.get("/verify"),
 
   logout: async () => {
-    await instance.post("/logout"), set(() => ({ user: null }));
+    await instance.post("/logout");
+    Cookies.remove("accessToken"); // Borramos la cookie que contiene el token
+    set(() => ({ user: null }));
   },
 }));

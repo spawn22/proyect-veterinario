@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 function Register() {
   const context = useContext(AuthContext);
@@ -22,8 +22,6 @@ function Register() {
     gender: "",
   });
 
-  const [formFilled, setFormFilled] = useState(false);
-
   const [errors, setErrors] = useState({
     name: "",
     lastName: "",
@@ -33,14 +31,15 @@ function Register() {
     gender: "",
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    await registerUser(formFields, navigate, toast);
-  };
-
-  if (context.isAuthenticated) {
+  if(context.isAuthenticated) {
     navigate("/home");
   }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await registerUser(formFields, toast);
+    navigate("/login");
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -55,7 +54,7 @@ function Register() {
           name: value ? "" : "Ingresa un Nombre",
         }));
         if (!value) {
-          toast.error("Ingresa un Nombre", { duration: 2000 });
+          toast.error("Ingresa un Nombre");
         }
         break;
       case "lastName":
@@ -64,7 +63,7 @@ function Register() {
           lastName: value ? "" : "Ingresa un Apellido",
         }));
         if (!value) {
-          toast.error("Ingresa un Apellido", { duration: 2000 });
+          toast.error("Ingresa un Apellido");
         }
         break;
       case "username":
@@ -73,7 +72,7 @@ function Register() {
           username: value ? "" : "Ingresa un Usuario",
         }));
         if (!value) {
-          toast.error("Ingresa un Usuario", { duration: 2000 });
+          toast.error("Ingresa un Usuario");
         }
         break;
       case "email":
@@ -82,7 +81,7 @@ function Register() {
           email: value ? "" : "Ingresa un Email",
         }));
         if (!value) {
-          toast.error("Ingresa un Email", { duration: 2000 });
+          toast.error("Ingresa un Email");
         }
         break;
       case "gender":
@@ -91,7 +90,7 @@ function Register() {
           gender: value ? "" : "Selecciona un Género",
         }));
         if (!value) {
-          toast.error("Selecciona un Género", { duration: 2000 });
+          toast.error("Selecciona un Género");
         }
         break;
       case "password":
@@ -100,25 +99,18 @@ function Register() {
           password: value ? "" : "Ingresa una Contraseña",
         }));
         if (!value) {
-          toast.error("Ingresa una Contraseña", { duration: 2000 });
+          toast.error("Ingresa una Contraseña");
         }
         break;
       default:
         break;
     }
     // Verificar si todos los campos están llenos
-    setFormFilled(
-      formFields.name !== "" &&
-        formFields.lastName !== "" &&
-        formFields.username !== "" &&
-        formFields.email !== "" &&
-        formFields.password !== ""
-    );
   };
 
   return (
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
-      <Toaster />
+      
 
       <form
         onSubmit={handleSubmit}
@@ -195,10 +187,7 @@ function Register() {
 
         <Button
           type="submit"
-          className={`"w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-            !formFilled ? "opacity-50 cursor-not-allowed w-full " : "w-full "
-          }`}
-          disabled={!formFilled}
+          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 "
         >
           Registro
         </Button>
