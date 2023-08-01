@@ -2,23 +2,23 @@ import Animal from "../models/animal.model.js";
 
 export const createPatientAnimal = async (req, res) => {
   const {
-    animalName,
-    animalOwner,
-    animalType,
-    animalAge,
-    animalGender,
-    animalBreed,
-    animalWeight,
+    name,
+    owner,
+    type,
+    age,
+    gender,
+    breed,
+    weight,
   } = req.body;
 
   const newPatient = new Animal({
-    animalName,
-    animalOwner,
-    animalType,
-    animalAge,
-    animalGender,
-    animalBreed,
-    animalWeight,
+    name,
+    owner,
+    type,
+    age,
+    gender,
+    breed,
+    weight,
     user: req.user.id,
   });
   try {
@@ -35,6 +35,7 @@ export const getAllPatientsAnimals = async (req, res) => {
         user: req.user.id
     }).populate("user");
     res.status(200).json(allPatients);
+
   } catch (error) {
     res.status(500).json(error);
   }

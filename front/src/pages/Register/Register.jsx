@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
+<<<<<<< HEAD:front/src/pages/Register/Register.jsx
 import { AuthContext } from "../../context/AuthContext";
 import { useState, useContext } from "react";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
+=======
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+>>>>>>> c719d842fe58e357c531be5904c4727060a0ab1d:front/src/components/Register/Register.jsx
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
