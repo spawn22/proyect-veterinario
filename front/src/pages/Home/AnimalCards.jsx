@@ -13,10 +13,10 @@ const AnimalCards = () => {
   }, [getPatients]);
 
   return (
-    <div>
-      <h1 className="text-white">Administrador de Pacientes</h1>
+    <div className="mt-6">
+      <h1 className="text-zinc-50 mb-4">Administrador de Pacientes</h1>
 
-      <ul  className=" grid gap-4 grid-cols-2">
+      <ul  className=" grid gap-4 md:grid-cols-2 mt-2">
       {patients.map((patient) => (
           <li key={patient._id}>
             <AnimalCard patient={patient} key={patient._id} />

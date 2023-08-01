@@ -48,10 +48,10 @@ const AnimalForm = () => {
     setAnimal(initialState);
   };
   return (
-    <div className="flex justify-center items-center ">
+    // <div className="flex justify-center items-center ">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md px-8 py-6 bg-white rounded-lg shadow-md"
+        className="w-full mt-6 max-w-md px-8 py-6 bg-zinc-50 rounded-lg shadow-md"
       >
         {error ? (
           <p className="w-full bg-black">Todos los campos son obligatorios</p>
@@ -143,7 +143,7 @@ const AnimalForm = () => {
           Agregar Paciente
         </button>
       </form>
-    </div>
+    // </div>
   );
 };
 export default AnimalForm;

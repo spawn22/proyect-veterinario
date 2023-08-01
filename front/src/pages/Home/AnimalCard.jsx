@@ -6,7 +6,7 @@ const {deleteAnimal }=useAnimalStore()
  
 
   return (
-    <div className="bg-zinc-500 p-2">
+    <div className="bg-zinc-500 p-2 rounded-xl">
     <p>
       Mascota: <span>{name}</span>
     </p>
@@ -29,7 +29,7 @@ const {deleteAnimal }=useAnimalStore()
       Peso: <span>{weight}</span>
     </p>
     <button
-      className="bg-red-600 text-zinc-50 p-2 "
+      className="bg-red-600 text-zinc-50 py-1 px-2 rounded-[5px] "
       onClick={() => deleteAnimal(_id)}
     >
       Eliminar &times;
