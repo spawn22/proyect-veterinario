@@ -1,7 +1,7 @@
 
-#root {
+.main-content{
   max-width: 2000px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0rem 2rem 2rem 2rem;
   text-align: center;
 }

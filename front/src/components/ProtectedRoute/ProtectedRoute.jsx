@@ -13,7 +13,9 @@ function ProtectedRoute() {
   return (
     <>
       <Menu />
-      <Outlet />
+      <main className="main-content">
+        <Outlet />
+      </main>
     </>
   );
 }

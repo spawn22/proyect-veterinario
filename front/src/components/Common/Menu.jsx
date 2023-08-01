@@ -38,35 +38,29 @@ const Menu = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <NavLink to={"/home"}>Inicio</NavLink>
+              <NavLink to={"/"}>Inicio</NavLink>
             </li>
             <li>
               <NavLink to={"/calendar"}>Calendario</NavLink>
-            </li>
-            <li>
-              <NavLink to={"/"}>Praciente</NavLink>
             </li>
             <li>
               <NavLink to={"/Profile"}>Perfil</NavLink>
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">Veterinaria</a>
+        <NavLink className="btn btn-ghost normal-case text-xl" to={"/"}>Veterinaria</NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            <NavLink to={"/home"}>Inicio</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/calendar"}>Calendario</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/"}>Praciente</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/Profile"}>Perfil</NavLink>
-          </li>
+        <li>
+              <NavLink to={"/"}>Inicio</NavLink>
+            </li>
+            <li>
+              <NavLink to={"/calendar"}>Calendario</NavLink>
+            </li>
+            <li>
+              <NavLink to={"/Profile"}>Perfil</NavLink>
+            </li>
         </ul>
       </div>
       <div className="navbar-end">

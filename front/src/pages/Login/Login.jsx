@@ -23,7 +23,7 @@ function Login() {
   });
 
   if (context.isAuthenticated) {
-    navigate("/home");
+    navigate("/");
   }
 
   const handleSubmit = async (e) => {
@@ -32,7 +32,7 @@ function Login() {
       // La función se ejecuta solo si el inicio de sesión es exitoso
       setTimeout(() => {
         context.setIsAuthenticated(true);
-        navigate("/home");
+        navigate("/");
       }, 3000); // Espera 3 segundos antes de redirigir al usuario al home
     });
   };
