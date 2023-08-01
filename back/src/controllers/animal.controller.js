@@ -40,7 +40,7 @@ export const getAllPatientsAnimals = async (req, res) => {
   }
 };
 
-export const EditPatientAnimal = async (req, res) => {
+export const editPatientAnimal = async (req, res) => {
   try {
     const editPatient = await Animal.findByIdAndUpdate(
       req.params.id,

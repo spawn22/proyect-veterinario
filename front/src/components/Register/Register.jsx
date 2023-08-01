@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 function Register() {
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   const registerUser = useAuthStore((state) => state.registerUser);
@@ -31,9 +33,12 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     await registerUser(formFields, navigate, toast);
   };
+
+  if (context.isAuthenticated) {
+    navigate("/home");
+  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
