@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useShiftsStore } from "../../store/shifts";
+import { useAnimalStore } from "../../store/animalStore";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
@@ -10,6 +11,8 @@ import Label from "../../components/Label";
 function Calendar() {
   const getShifts = useShiftsStore((state) => state.getShifts);
   const shifts = useShiftsStore((state) => state.shifts);
+  const getAnimals = useAnimalStore((state) => state.getPatients);
+  const animals = useAnimalStore((state) => state.patients);
   const postShifts = useShiftsStore((state) => state.postShifts);
   const deleteShifts = useShiftsStore((state) => state.deleteShifts);
   const putShifts = useShiftsStore((state) => state.putShifts);
@@ -23,7 +26,6 @@ function Calendar() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [shiftToEdit, setShiftToEdit] = useState(null);
-
   useEffect(() => {
     toast.promise(
       getShifts(),
@@ -38,7 +40,8 @@ function Calendar() {
         },
       }
     );
-  }, [getShifts]);
+    getAnimals();
+  }, [getShifts, getAnimals]);
 
   // Función para manejar el evento de agregar turno
   const handleAddShifts = (e) => {
@@ -52,7 +55,13 @@ function Calendar() {
       toast.error("Por favor, llene todos los campos", { duration: 3000 });
       return;
     }
-    postShifts(shiftData)
+    const data = {
+      description: shiftData.description,
+      date: shiftData.date,
+      start_time: shiftData.start_time,
+      animal: shiftData.selectPatient,
+    };
+    postShifts(data)
       .then(() => {
         setIsFormVisible(false);
         setShiftData({
@@ -92,7 +101,10 @@ function Calendar() {
       return;
     }
 
-    putShifts(shiftToEdit._id, shiftData)
+    putShifts(shiftToEdit._id, {
+      ...shiftData,
+      animal: shiftData.selectPatient,
+    })
       .then(() => {
         setIsFormVisible(false);
         setShiftToEdit(null);
@@ -181,7 +193,7 @@ function Calendar() {
                   {shifts
                     ?.filter((shift) => {
                       const searchTermLower = searchTerm.toLowerCase();
-                      return shift?.animal?.animalName
+                      return shift?.animal?.name
                         ?.toLowerCase()
                         ?.includes(searchTermLower);
                     })
@@ -191,13 +203,13 @@ function Calendar() {
                         className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
                       >
                         <td className="whitespace-nowrap px-6 py-4 font-medium">
-                          {shift?.animal?.animalName}
+                          {shift?.animal.name}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 font-medium">
-                          {shift?.animal?.animalOwner}
+                          {shift?.animal?.owner}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 font-medium">
-                          {shift?.animal?.animalBreed}
+                          {shift?.animal?.breed}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 font-medium">
                           {moment(shift?.date).utc().format("DD/MM/YYYY")}
@@ -216,7 +228,7 @@ function Calendar() {
                               setShiftData({
                                 date: shift?.date,
                                 start_time: shift?.start_time,
-                                selectPatient: shift?.patient?._id,
+                                selectPatient: shift?.animal._id,
                                 description: shift?.description,
                               });
                             }}
@@ -344,11 +356,12 @@ function Calendar() {
               }
             >
               {/* Opciones para el selector de paciente */}
-              {/* {shifts.map((patient) => (
-        <option key={patient._id} value={patient.animal._id}>
-          {patient.animal.animalName}
-        </option>
-      ))} */}
+              <option value="">Seleccionar Paciente</option>
+              {animals.map((patient) => (
+                <option key={patient._id} value={patient._id}>
+                  {patient.name}
+                </option>
+              ))}
             </select>
           </div>
         </div>
