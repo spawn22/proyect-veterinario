@@ -48,7 +48,7 @@ const Menu = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">Veterinaria</a>
+        <NavLink className="btn btn-ghost normal-case text-xl" to={"/"}>Veterinaria</NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
