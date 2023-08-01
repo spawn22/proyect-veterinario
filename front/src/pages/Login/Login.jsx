@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
 import { AuthContext } from "../../context/AuthContext";
-<<<<<<< HEAD:front/src/pages/Login/Login.jsx
 import { useState, useContext } from "react";
-=======
-import { useState, useContext, useEffect } from "react";
->>>>>>> c719d842fe58e357c531be5904c4727060a0ab1d:front/src/components/Login/Login.jsx
 import { useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input";
 import Button from "../../components/Button";
