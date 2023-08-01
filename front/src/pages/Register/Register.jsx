@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
 import { AuthContext } from "../../context/AuthContext";
 import { useState, useContext } from "react";
+import Button from "../../components/Button";
+import { Input } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -126,7 +128,7 @@ function Register() {
           Registro
         </h1>
         <div className="mb-4">
-          <input
+          <Input
             type="text"
             name="name"
             placeholder="Name"
@@ -137,7 +139,7 @@ function Register() {
           />
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="text"
             name="lastName"
             placeholder="Last Name"
@@ -146,7 +148,7 @@ function Register() {
           />
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="text"
             name="username"
             placeholder="Username"
@@ -155,7 +157,7 @@ function Register() {
           />
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="email"
             name="email"
             placeholder="Email"
@@ -176,7 +178,7 @@ function Register() {
           </select>
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="password"
             name="password"
             placeholder="Password"
@@ -191,7 +193,7 @@ function Register() {
           ¿Ya estás registrado? Inicia sesión aquí
         </Link>
 
-        <button
+        <Button
           type="submit"
           className={`"w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
             !formFilled ? "opacity-50 cursor-not-allowed w-full " : "w-full "
@@ -199,7 +201,7 @@ function Register() {
           disabled={!formFilled}
         >
           Registro
-        </button>
+        </Button>
       </form>
     </div>
   );

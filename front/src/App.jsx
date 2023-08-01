@@ -1,12 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
-import Calendar from "./components/Calendar/Calendar";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
+import Calendar from "./pages/Calendar/Calendar";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import Profile from "./components/Profile/Profile";
+import Profile from "./pages/Profile/Profile";
 import "./App.css";
-
 
 function App() {
   return (

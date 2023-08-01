@@ -3,6 +3,8 @@ import { useAuthStore } from "../../store/auth";
 import { AuthContext } from "../../context/AuthContext";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Input } from "../../components/Input";
+import Button from "../../components/Button";
 import toast, { Toaster } from "react-hot-toast";
 function Login() {
   const context = useContext(AuthContext);
@@ -15,7 +17,6 @@ function Login() {
     password: "",
   });
 
-  const [formFilled, setFormFilled] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -65,7 +66,6 @@ function Login() {
         break;
     }
     // Verificar si todos los campos están llenos
-    setFormFilled(formFields.email !== "" && formFields.password !== "");
   };
 
   return (
@@ -79,7 +79,7 @@ function Login() {
           Inicia Sesion
         </h1>
         <div className="mb-4">
-          <input
+          <Input
             type="email"
             name="email"
             placeholder="Email"
@@ -90,7 +90,7 @@ function Login() {
           />
         </div>
         <div className="mb-4">
-          <input
+          <Input
             type="password"
             name="password"
             placeholder="Password"
@@ -104,15 +104,12 @@ function Login() {
         >
           ¿No estás registrado? Regístrate aquí
         </Link>
-        <button
+        <Button
           type="submit"
-          className={`"w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-            !formFilled ? "opacity-50 cursor-not-allowed w-full " : "w-full "
-          }`}
-          disabled={!formFilled}
+          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Inicia Sesion
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useShiftsStore } from "../../store/shifts";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import Button from "../../components/Button";
+import { Input } from "../../components/Input";
 import moment from "moment";
 import toast, { Toaster } from "react-hot-toast";
+import Label from "../../components/Label";
 
 function Calendar() {
   const getShifts = useShiftsStore((state) => state.getShifts);
@@ -84,7 +87,7 @@ function Calendar() {
     if (
       !shiftData.date ||
       !shiftData.start_time ||
-      !shiftData.selectPatient ||
+      // !shiftData.selectPatient ||
       !shiftData.description
     ) {
       toast.error("Por favor, llene todos los campos", { duration: 3000 });
@@ -121,7 +124,7 @@ function Calendar() {
       {/*Boton agregar Turnos */}
       <div className="my-4 flex justify-between">
         <div className=" mr-4">
-          <input
+          <Input
             type="text"
             placeholder="Buscar nombre Paciente"
             className="px-2 py-1 border border-gray-300 rounded-md w-[100%]"
@@ -130,7 +133,7 @@ function Calendar() {
           />
         </div>
         <div>
-          <button
+          <Button
             className="px-4 py-2 bg-[#3da9fc] text-[#fffffe] rounded-md"
             onClick={() => {
               setIsFormVisible(true);
@@ -143,7 +146,7 @@ function Calendar() {
             }}
           >
             Agregar Turno
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -209,7 +212,7 @@ function Calendar() {
                           {shift?.description}
                         </td>
                         <td>
-                          <button
+                          <Button
                             onClick={() => {
                               setIsFormVisible(true);
                               setShiftToEdit(shift);
@@ -226,23 +229,23 @@ function Calendar() {
                               size={25}
                               className="hover:text-blue-500"
                             />
-                          </button>
-                          <button
+                          </Button>
+                          <Button
                             onClick={(e) => {
                               e.preventDefault();
-                              if(window.confirm("¿Desea eliminar este turno?")){
+                              if (
+                                window.confirm("¿Desea eliminar este turno?")
+                              ) {
                                 handleDeleteShifts(e, shift?._id);
-                                
                               }
-                            }
-                            }
+                            }}
                             className="mr-2"
                           >
                             <AiFillDelete
                               size={25}
                               className="hover:text-red-500"
                             />
-                          </button>
+                          </Button>
                         </td>
                       </tr>
                     ))}
@@ -276,13 +279,13 @@ function Calendar() {
         </h1>
         <div className="mb-4 flex flex-col">
           <div className="mb-2">
-            <label
+            <Label
               htmlFor="description"
               className="text-black font-bold text-lg block"
             >
               Descripcion:
-            </label>
-            <input
+            </Label>
+            <Input
               type="text"
               className="px-2 py-2 border border-gray-300 rounded-md"
               value={shiftData.description}
@@ -292,13 +295,13 @@ function Calendar() {
             />
           </div>
           <div className="mb-2">
-            <label
+            <Label
               htmlFor="date"
               className="text-black font-bold text-lg block"
             >
               Fecha:
-            </label>
-            <input
+            </Label>
+            <Input
               type="date"
               id="date"
               className="px-2 py-2 border border-gray-300 rounded-md"
@@ -309,13 +312,13 @@ function Calendar() {
             />
           </div>
           <div className="mb-2">
-            <label
+            <Label
               htmlFor="time"
               className="text-black font-bold text-lg block"
             >
               Hora:
-            </label>
-            <input
+            </Label>
+            <Input
               type="time"
               id="time"
               className="px-2 py-1 border border-gray-300 rounded-md"
@@ -326,12 +329,12 @@ function Calendar() {
             />
           </div>
           <div className="mb-2">
-            <label
+            <Label
               htmlFor="selectedPatient"
               className="text-black font-bold text-lg block"
             >
               Paciente:
-            </label>
+            </Label>
             <select
               id="selectedPatient"
               className="px-2 py-1 border border-gray-300 rounded-md"
@@ -353,18 +356,18 @@ function Calendar() {
           </div>
         </div>
         <div className=" flex flex-col justify-center items-center ">
-          <button
+          <Button
             className="px-4 py-3 w-full bg-[#3da9fc] text-[#fffffe] rounded-md mt-2 mb-3 hover:bg-gray-400"
             type="submit"
           >
             {shiftToEdit ? "Guardar cambios" : "Agendar turno"}
-          </button>
-          <button
+          </Button>
+          <Button
             className="px-4 py-3 bg-[#3da9fc] w-full text-[#fffffe] rounded-md hover:bg-gray-400"
             onClick={handleCancelEdit}
           >
             Cancelar
-          </button>
+          </Button>
         </div>
       </form>
     </div>
