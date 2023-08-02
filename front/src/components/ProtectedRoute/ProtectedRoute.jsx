@@ -2,6 +2,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import Menu from "../Common/Menu";
+import Footer from "../Common/Footer";
 
 function ProtectedRoute() {
   const context = useContext(AuthContext);
@@ -16,6 +17,7 @@ function ProtectedRoute() {
       <main className="main-content">
         <Outlet />
       </main>
+      <Footer />
     </>
   );
 }
