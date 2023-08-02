@@ -1,4 +1,5 @@
 import { useAnimalStore } from "../../store/animalStore";
+import { FaTrashCan } from "react-icons/fa6";
 
 const AnimalCard = ({ patient }) => {
   const { _id, name, owner, type, age, gender, breed, weight } = patient;
@@ -28,10 +29,14 @@ const AnimalCard = ({ patient }) => {
         <span className="font-bold">Peso:</span> <span>{weight} kg</span>
       </p>
       <button
-        className="bg-red-600 text-white py-1 px-2 rounded-[5px] "
+        className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none"
         onClick={() => deleteAnimal(_id)}
       >
-        Eliminar &times;
+        <span className="mr-2">Eliminar</span>
+        <FaTrashCan />
+        
+        
+        
       </button>
     </div>
   );
