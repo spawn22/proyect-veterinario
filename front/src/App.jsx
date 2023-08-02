@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import "./App.css";
 import Home from "./pages/Home/Home";
 import Landing from "./pages/Landing/Landing";
+import Error404 from "./pages/Error404/Error404";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/error404" element={<Error404></Error404>} />
           </Route>
         </Routes>
       </BrowserRouter>
