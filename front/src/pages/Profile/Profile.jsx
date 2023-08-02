@@ -24,7 +24,7 @@ function Profile() {
   const imageSrc = genderImage ? genderImage[profile.gender] : null;
 
   return (
-    <div className="flex items-center h-screen w-full justify-center">
+    <div className="flex items-center h-100 w-full justify-center pt-[2rem]">
       <div className="max-w-xl">
         <div className="bg-white shadow-xl rounded-lg py-[1rem] px-[1rem]">
           <div className="photo-wrapper p-2">
@@ -67,15 +67,6 @@ function Profile() {
                 </tr>
               </tbody>
             </table>
-
-            <div className="text-center mt-10">
-              <a
-                className="text-lg text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium"
-                href="#"
-              >
-                Volver Atras
-              </a>
-            </div>
           </div>
         </div>
       </div>
