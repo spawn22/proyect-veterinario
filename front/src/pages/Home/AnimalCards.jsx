@@ -14,7 +14,7 @@ const AnimalCards = () => {
 
   return (
     <div className="mt-6">
-      <h1 className="text-zinc-50 mb-4">Administrador de Pacientes</h1>
+      <h1 className="text-zinc-50 mb-4 font-bold text-2xl">Administrador tus Pacientes <span className="text-sky-300">AQUI</span></h1>
 
       <ul  className=" grid gap-4 md:grid-cols-2 mt-2">
       {patients.map((patient) => (

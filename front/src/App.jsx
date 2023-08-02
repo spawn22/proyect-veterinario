@@ -8,18 +8,20 @@ import Profile from "./pages/Profile/Profile";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
 import Home from "./pages/Home/Home";
+import Landing from "./pages/Landing/Landing";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-          <Toaster />
+        <Toaster />
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/home" element={<Home/>} />
+            <Route path="/home" element={<Home />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<Profile />} />
           </Route>

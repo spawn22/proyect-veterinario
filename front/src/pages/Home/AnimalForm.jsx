@@ -48,7 +48,8 @@ const AnimalForm = () => {
     setAnimal(initialState);
   };
   return (
-    // <div className="flex justify-center items-center ">
+    <div>
+      <h1 className="text-zinc-50 mb-4 font-bold text-2xl flex gap-2 mt-5">Crea tus Pacientes  <span className="text-sky-300 ">Desde este Formulario</span></h1>
       <form
         onSubmit={handleSubmit}
         className="w-full mt-6 max-w-md px-8 py-6 bg-zinc-50 rounded-lg shadow-md"
@@ -143,7 +144,7 @@ const AnimalForm = () => {
           Agregar Paciente
         </button>
       </form>
-    // </div>
+    </div>
   );
 };
 export default AnimalForm;
