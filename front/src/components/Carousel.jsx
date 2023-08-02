@@ -11,7 +11,7 @@ const images = [
   },
   {
     url: "https://res.cloudinary.com/ddyk63iig/image/upload/v1690931374/veterinarian-checks-dog-s-ears-lxcgb7vsb8kmsfl8_pf0ifz.jpg",
-    text: "Nos enorgullece ser una clínica amigable para mascotas",
+    text: "Nos enorgullece trabajar con  una clínica amigable para mascotas",
   },
 ];
 function Carousel() {
@@ -34,8 +34,8 @@ function Carousel() {
           alt={selectedImage.text}
           className="w-full h-full object-cover"
         />
-        <div className="absolute bottom-0 left-0 right-0 px-4 py-6 text-blue-700">
-          <h1 className="text-3xl font-bold mb-2">{selectedImage.text}</h1>
+        <div className="absolute bottom-0 left-0 right-0 px-4 py-6 text-zinc-950">
+          <h1 className="text-3xl font-extrabold font-customFont mb-2">{selectedImage.text}</h1>
         </div>
       </div>
     </div>

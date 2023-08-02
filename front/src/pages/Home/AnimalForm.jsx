@@ -1,11 +1,8 @@
-import { Form } from "react-router-dom";
 import useErrors from "../../hooks/useErrors";
 import { useAnimal, initialState } from "../../hooks/useAnimal";
 import { useAnimalStore } from "../../store/animalStore";
-
-
+import toast from "react-hot-toast";
 const AnimalForm = () => {
-  
   const { animal, setAnimal } = useAnimal();
   const { name, owner, type, age, gender, breed, weight } = animal;
 
@@ -20,9 +17,15 @@ const AnimalForm = () => {
     });
   };
 
-
-  
-  const data = { name, owner, type, age:Number(age), gender, breed, weight:Number(weight) };
+  const data = {
+    name,
+    owner,
+    type,
+    age: Number(age),
+    gender,
+    breed,
+    weight: Number(weight),
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,9 +42,9 @@ const AnimalForm = () => {
       setError(true);
       return;
     }
-   
-    await registerAnimal(data)
 
+    await registerAnimal(data);
+    toast.success("Animal registrado con éxito");
     setError(false);
 
     //Reinciar el form
@@ -49,7 +52,10 @@ const AnimalForm = () => {
   };
   return (
     <div>
-      <h1 className="text-zinc-50 mb-4 font-bold text-2xl flex gap-2 mt-5">Crea tus Pacientes  <span className="text-sky-300 ">Desde este Formulario</span></h1>
+      <h1 className="text-zinc-50 mb-4 font-bold text-2xl flex gap-2 mt-5">
+        Crea tus Pacientes{" "}
+        <span className="text-sky-300 ">Desde este Formulario</span>
+      </h1>
       <form
         onSubmit={handleSubmit}
         className="w-full mt-6 max-w-md px-8 py-6 bg-zinc-50 rounded-lg shadow-md"
