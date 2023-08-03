@@ -4,7 +4,7 @@ import instance from "./interceptors/config";
 export const useAnimalStore = create((set, get) => ({
   patients: [],
   patient: null,
-
+  errors: [],
   getPatients: async () => {
     try {
       const res = await instance.get("/patient");
@@ -12,6 +12,7 @@ export const useAnimalStore = create((set, get) => ({
       set({ patients: data });
     } catch (error) {
       console.log(error);
+      set({ errors: [...get().errors, error.res.data] });
     }
   },
   registerAnimal: async (data) => {

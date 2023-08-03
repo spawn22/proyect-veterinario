@@ -61,4 +61,15 @@ export const useAuthStore = create((set) => ({
     Cookies.remove("accessToken"); // Borramos la cookie que contiene el token
     set(() => ({ user: null }));
   },
+  refreshToken: async () => {
+    try {
+      const res = await instance.post("/refresh");
+      if (res.status === 200) {
+        window.location.reload();
+      }
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 }));

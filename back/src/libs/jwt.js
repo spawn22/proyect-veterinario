@@ -22,7 +22,7 @@ export function createRefreshToken(payload) {
       payload,
       TOKEN_SECRET,
       {
-        expiresIn: "7d",
+        expiresIn: "1d",
       },
       (err, token) => {
         if (err) reject(err);

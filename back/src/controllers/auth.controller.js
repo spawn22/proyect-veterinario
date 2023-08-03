@@ -49,14 +49,24 @@ export const login = async (req, res) => {
     if (!userFound)
       return res
         .status(400)
-        .json({ message: "Usuario no encontrador, Porfavor Registrese" });
+        .json({ message: "Usuario no encontrado, Porfavor Registrese" });
     const passwordCompare = await bcrypt.compare(password, userFound.password);
 
     if (!passwordCompare)
       return res.status(400).json({ message: "Invalid password" });
 
-    const accessToken = await createAccessToken({ id: userFound._id });
-    const refreshToken = await createRefreshToken({ id: userFound._id });
+    const accessToken = await createAccessToken(
+      {
+        id: userFound._id,
+        httpOnly: true,
+      },
+      TOKEN_SECRET
+    );
+
+    const refreshToken = await createRefreshToken(
+      { id: userFound._id, httpOnly: true },
+      TOKEN_SECRET
+    );
     res.cookie("accessToken", accessToken);
     res.cookie("refreshToken", refreshToken);
     res.json({
@@ -88,20 +98,24 @@ export const refreshToken = async (req, res) => {
   }
 
   try {
-    const decodedToken = await verifyToken(refreshToken, TOKEN_SECRET);
+    const decodedToken = await jwt.verify(refreshToken, TOKEN_SECRET);
     const user = await User.findById(decodedToken.id);
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
-    const accessToken = await createAccessToken({ id: user._id });
-    const newRefreshToken = await createRefreshToken({ id: user._id });
+    const accessToken = await createAccessToken({
+      id: user._id,
+      httpOnly: true,
+    });
+    const newRefreshToken = await createRefreshToken({
+      id: user._id,
+      httpOnly: true,
+    });
 
-    res.cookie("accessToken", accessToken, { httpOnly: true });
-    res.cookie("refreshToken", newRefreshToken, { httpOnly: true });
+    res.cookie("accessToken", accessToken);
+    res.cookie("refreshToken", newRefreshToken);
 
-    res
-      .cookie("accessToken", accessToken, { httpOnly: true })
-      .json({ message: "Access token refreshed" });
+    res.json({ message: "Access token refreshed" });
   } catch (error) {
     res.status(403).json({
       message:

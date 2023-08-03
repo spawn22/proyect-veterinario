@@ -10,6 +10,7 @@ export const useShiftsStore = create((set, get) => ({
       const data = res.data;
       set({ shifts: data });
     } catch (error) {
+      console.log(error);
       set({ errors: [...get().errors, error.res.data] });
     }
   },

@@ -64,7 +64,6 @@ function Calendar() {
       .then(() => {
         setIsFormVisible(false);
         setShiftData({
-          // date: moment(shiftData.date, "DD-MM-YYYY").format(),
           date: "",
           start_time: "",
           selectPatient: "",
@@ -92,12 +91,7 @@ function Calendar() {
   // Función para manejar el evento de edición
   const handleEditShifts = (e) => {
     e.preventDefault();
-    if (
-      !shiftData.date ||
-      !shiftData.start_time ||
-      // !shiftData.selectPatient ||
-      !shiftData.description
-    ) {
+    if (!shiftData.date || !shiftData.start_time || !shiftData.description) {
       toast.error("Por favor, llene todos los campos", { duration: 2000 });
       return;
     }

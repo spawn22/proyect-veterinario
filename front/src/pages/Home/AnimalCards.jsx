@@ -20,6 +20,12 @@ const AnimalCards = () => {
         success: {
           duration: 2000,
         },
+        loading: {
+          duration: 1000,
+        },
+        error: {
+          duration: 2000,
+        },
       }
     );
   }, [getPatients]);
