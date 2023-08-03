@@ -5,7 +5,7 @@ export const useAnimalStore = create((set, get) => ({
   patients: [],
   patient: null,
 
-  getPatients: async () => {
+  getAnimals: async () => {
     try {
       const res = await instance.get("/patient");
       const data = res.data;
@@ -22,7 +22,7 @@ export const useAnimalStore = create((set, get) => ({
     } catch (error) {
       set(() => ({ errors: error.response.data.error }));
     } finally {
-      get().getPatients();
+      get().getAnimals();
     }
   },
   deleteAnimal: async (id) => {
@@ -36,7 +36,7 @@ export const useAnimalStore = create((set, get) => ({
     } catch (error) {
       set((state) => ({ errors: [...state.errors, error.res.data] }));
     } finally {
-      get().getPatients();
+      get().getAnimals();
     }
   },
 }));

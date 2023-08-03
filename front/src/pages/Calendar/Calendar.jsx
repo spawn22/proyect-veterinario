@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 function Calendar() {
   const getShifts = useShiftsStore((state) => state.getShifts);
   const shifts = useShiftsStore((state) => state.shifts);
-  const getAnimals = useAnimalStore((state) => state.getPatients);
+  const getAnimals = useAnimalStore((state) => state.getAnimals);
   const animals = useAnimalStore((state) => state.patients);
   const postShifts = useShiftsStore((state) => state.postShifts);
   const deleteShifts = useShiftsStore((state) => state.deleteShifts);

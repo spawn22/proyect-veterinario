@@ -6,11 +6,11 @@ const AnimalCards = () => {
   const { patients } = useAnimalStore((state) => ({
     patients: state.patients,
   }));
-  const { getPatients } = useAnimalStore();
+  const { getAnimals } = useAnimalStore();
 
   useEffect(() => {
     toast.promise(
-      getPatients(),
+      getAnimals(),
       {
         loading: "Cargando pacientes...",
         success: "Pacientes cargados",
@@ -22,7 +22,7 @@ const AnimalCards = () => {
         },
       }
     );
-  }, [getPatients]);
+  }, [getAnimals]);
 
   return (
     <div className="mt-6">
