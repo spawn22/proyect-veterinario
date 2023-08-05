@@ -32,8 +32,8 @@ const AnimalCards = () => {
 
       <ul className=" grid gap-4 md:grid-cols-2 mt-2">
         {patients.map((patient) => (
-          <li key={patient._id}>
-            <AnimalCard patient={patient} key={patient._id} />
+          <li key={patient.id}>
+            <AnimalCard patient={patient}/>
           </li>
         ))}
       </ul>

@@ -10,6 +10,7 @@ import "./App.css";
 import Home from "./pages/Home/Home";
 import Landing from "./pages/Landing/Landing";
 import Error404 from "./pages/Error404/Error404";
+import AnimalEdit from "./pages/AnimalEdit/AnimalEdit";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 
           <Route element={<ProtectedRoute />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/edit/:id" element={<AnimalEdit />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/error404" element={<Error404></Error404>} />

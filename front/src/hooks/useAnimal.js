@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-
-export const initialState ={
+export const initialState = {
   name: "",
   owner: "",
   type: "",
@@ -9,13 +8,12 @@ export const initialState ={
   gender: "",
   breed: "",
   weight: "",
-}
+};
 
 export const useAnimal = () => {
-  const [animal, setAnimal] = useState(
-    initialState
-);
+  const [animal, setAnimal] = useState(initialState);
   return { animal, setAnimal };
 };
+
 
 
