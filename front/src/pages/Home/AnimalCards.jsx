@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useAnimalStore } from "../../store/animalStore";
 import AnimalCard from "./AnimalCard";
-import toast from "react-hot-toast";
 const AnimalCards = () => {
   const { patients } = useAnimalStore((state) => ({
     patients: state.patients,
@@ -9,19 +8,7 @@ const AnimalCards = () => {
   const { getAnimals } = useAnimalStore();
 
   useEffect(() => {
-    toast.promise(
-      getAnimals(),
-      {
-        loading: "Cargando pacientes...",
-        success: "Pacientes cargados",
-        error: "Error al cargar pacientes",
-      },
-      {
-        success: {
-          duration: 2000,
-        },
-      }
-    );
+    getAnimals();
   }, [getAnimals]);
 
   return (
@@ -30,10 +17,10 @@ const AnimalCards = () => {
         Administrador tus Pacientes <span className="text-sky-300">AQUI</span>
       </h1>
 
-      <ul className=" grid gap-4 md:grid-cols-2 mt-2">
+      <ul className=" grid gap-6 md:grid md:grid-cols-1 lg:grid-cols-1 lg:gap-4 xl:grid xl:grid-cols-2 2xl:grid 2xl:grid-col-3 mt-2">
         {patients.map((patient) => (
           <li key={patient.id}>
-            <AnimalCard patient={patient}/>
+            <AnimalCard patient={patient} />
           </li>
         ))}
       </ul>

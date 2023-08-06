@@ -72,7 +72,7 @@ const AnimalEdit = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col h-screen items-center justify-center">
       <h1 className="text-zinc-50 mb-4 font-bold text-2xl flex gap-2 mt-5">
         Editar Pacientes{" "}
         <span className="text-sky-300 ">Desde este Formulario</span>

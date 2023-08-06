@@ -1,4 +1,5 @@
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useAnimalStore } from "../../store/animalStore";
 
@@ -7,8 +8,25 @@ const AnimalCard = ({ patient }) => {
   const { deleteAnimal } = useAnimalStore();
   const navigate = useNavigate();
 
+  const confirmDelete = () => {
+    Swal.fire({
+      title: "Desea Eliminar esta mascota?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText:'Cancelar',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Confirma!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteAnimal(_id);
+        Swal.fire("Eliminada!", "La mascota fue eliminada.", "success");
+      }
+    });
+  };
+
   return (
-    <div className="bg-[#fffffe] p-2 rounded-xl text-black">
+    <div className="bg-[#fffffe] p-2 rounded-xl text-black ">
       <p>
         <span className="font-bold">Mascota:</span> <span>{name}</span>
       </p>
@@ -40,7 +58,7 @@ const AnimalCard = ({ patient }) => {
       </button>
       <button
         className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none "
-        onClick={() => deleteAnimal(_id)}
+        onClick={confirmDelete}
       >
         <span className="mr-2">Eliminar</span>
         <AiFillDelete size={25} />
