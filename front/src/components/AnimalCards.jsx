@@ -68,7 +68,7 @@ const AnimalCards = () => {
           <Input
             type="text"
             placeholder="Nombre de mascota"
-            className="px-2 py-1 border border-gray-300 rounded-md w-[100%]"
+            className="px-2 py-1 border border-gray-300 rounded-md w-[100%] bg-gray-900 text-white"
             value={searchTermName}
             onInput={handleSearchName}
           />
@@ -77,7 +77,7 @@ const AnimalCards = () => {
           <Input
             type="text"
             placeholder="Tipo de animal, Ej: Gato, Perro, etc."
-            className="px-2 py-1 border border-gray-300 rounded-md w-[100%]"
+            className="px-2 py-1 border border-gray-300 rounded-md w-[100%] bg-gray-900 text-white"
             value={searchTermType}
             onChange={handleSearchType}
           />
