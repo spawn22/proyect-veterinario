@@ -17,7 +17,6 @@ const images = [
 function Carousel() {
   const [currentImage, setCurrentImage] = useState(0);
   const selectedImage = images[currentImage];
-  console.log(selectedImage);
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImage((currentImage) => (currentImage + 1) % images.length);
@@ -35,7 +34,9 @@ function Carousel() {
           className="w-full h-full object-cover"
         />
         <div className="absolute bottom-0 left-0 right-0 px-4 py-6 text-zinc-950">
-          <h1 className="text-3xl font-extrabold font-customFont mb-2">{selectedImage.text}</h1>
+          <h1 className="text-3xl font-extrabold font-customFont mb-2">
+            {selectedImage.text}
+          </h1>
         </div>
       </div>
     </div>

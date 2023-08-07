@@ -27,7 +27,6 @@ export const useAnimalStore = create((set, get) => ({
     }
   },
   deleteAnimal: async (id) => {
-    console.log(id);
     try {
       const res = await instance.delete(`/patient/${id}`);
       set((state) => ({

@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useAuthStore } from "../store/auth";
 import Cookies from "js-cookie";
+import { useLocation } from "react-router-dom";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -9,8 +10,13 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      setLoading(false);
+      return;
+    }
     const checkLogin = async () => {
       const cookies = Cookies.get();
       try {
@@ -30,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       }
     };
     checkLogin();
-  }, [verifyToken, refreshToken]);
+  }, [verifyToken, refreshToken, location]);
 
   return (
     <AuthContext.Provider

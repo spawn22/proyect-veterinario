@@ -65,6 +65,7 @@ export const useAuthStore = create((set) => ({
     try {
       const res = await instance.post("/refresh");
       if (res.status === 200) {
+        console.log(res);
         window.location.reload();
       }
       return res.data;
