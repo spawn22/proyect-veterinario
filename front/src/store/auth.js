@@ -34,7 +34,7 @@ export const useAuthStore = create((set) => ({
         const user = response.data;
         set(() => ({ user }));
         toast.success("Usuario Logeado Exitosamente");
-        toast.loading("Redireccionando...", { duration: 3000 });
+        toast.loading("Redireccionando...", { duration: 1000 });
         onSuccess(); // Llamamos a onSuccess si el inicio de sesión es exitoso
         return user;
       } else {
