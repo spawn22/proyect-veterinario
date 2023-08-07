@@ -3,6 +3,7 @@ import { useAnimalStore } from "../store/animalStore";
 import PaginationTable from "../components/PaginationTable";
 import AnimalCard from "./AnimalCard";
 import toast from "react-hot-toast";
+import { Input } from "./Input";
 const AnimalCards = () => {
   const { patients } = useAnimalStore((state) => ({
     patients: state.patients,
@@ -10,6 +11,8 @@ const AnimalCards = () => {
   const { getAnimals } = useAnimalStore();
   const ITEMS_PER_PAGE = 6;
   const [currentPage, setCurrentPage] = useState(1);
+  const { filterAnimalsName } = useAnimalStore();
+  const [searchTerm, setSearchTerm] = useState('');
   const shiftedPatients = patients?.slice(
     currentPage > 1 ? (currentPage - 1) * ITEMS_PER_PAGE : 0,
     currentPage > 1 ? currentPage * ITEMS_PER_PAGE : ITEMS_PER_PAGE
@@ -20,6 +23,13 @@ const AnimalCards = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const handleSearch = (e) =>{
+    setSearchTerm(e.target.value)
+  }
+
+  useEffect(()=>{
+    filterAnimalsName(searchTerm)
+  },[searchTerm])
 
   useEffect(() => {
     toast.promise(
@@ -48,7 +58,15 @@ const AnimalCards = () => {
       <h1 className="text-zinc-50 mb-4 font-bold text-2xl">
         Administrador tus Pacientes <span className="text-sky-300">AQUI</span>
       </h1>
-
+      <div className=" mr-4">
+          <Input
+            type="text"
+            placeholder="Buscar nombre Paciente"
+            className="px-2 py-1 border border-gray-300 rounded-md w-[100%]"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
       <ul className=" grid gap-6 md:grid md:grid-cols-1 lg:grid-cols-1 lg:gap-4 xl:grid xl:grid-cols-2 2xl:grid 2xl:grid-col-3 mt-2">
         {shiftedPatients.map((patient) => (
           <li key={patient.id}>
