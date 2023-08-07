@@ -28,10 +28,9 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await loginUser(formFields, toast, () => {
-      context.setIsAuthenticated(true);
-      navigate("/home");
-    });
+    await loginUser(formFields, toast);
+    context.setIsAuthenticated(true);
+    navigate("/home");
   };
 
   const handleInputChange = (event) => {
