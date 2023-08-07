@@ -57,7 +57,7 @@ const AnimalForm = () => {
     setFields(initialValues);
   };
   return (
-    <div>
+    <div className="mt-1">
       <h1 className="text-zinc-50 mb-4 font-bold text-2xl flex gap-2 mt-5 ">
         Crea tus Pacientes{" "}
         <span className="text-sky-300 ">Desde este Formulario</span>

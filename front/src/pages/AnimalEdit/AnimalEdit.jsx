@@ -146,6 +146,11 @@ const AnimalEdit = () => {
         <Label className="text-black block w-full text-left mb-2">
           Peso
           <Input
+            min="0"
+            step="0.01"
+            max="1000"
+            pattern="[0-9]*(\.[0-9]{1,2})?"
+            title="Solo se permiten nÚmeros y decimales"
             type="number"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             ref={weight}
