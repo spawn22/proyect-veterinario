@@ -14,6 +14,7 @@ const initialValues = {
   gender: "",
   breed: "",
   weight: "",
+  description: "",
 };
 
 const AnimalForm = () => {
@@ -34,7 +35,8 @@ const AnimalForm = () => {
       !fields.age.trim() ||
       !fields.gender.trim() ||
       !fields.breed.trim() ||
-      !fields.weight.trim()
+      !fields.weight.trim() ||
+      !fields.description.trim()
     ) {
       setError(true);
       return;
@@ -47,6 +49,7 @@ const AnimalForm = () => {
       gender: fields.gender,
       breed: fields.breed,
       weight: Number(fields.weight),
+      description: fields.description,
     };
 
     await registerAnimal(data);
@@ -138,6 +141,15 @@ const AnimalForm = () => {
             title="Solo se permiten nÚmeros y decimales"
             type="number"
             {...form.getInput("weight")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
+          Historia Clinico
+          <Input
+            placeholder="Historia clinica"
+            type="text"
+            {...form.getInput("description")}
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
           />
         </Label>

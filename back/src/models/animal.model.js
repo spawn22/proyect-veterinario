@@ -30,6 +30,10 @@ const animalSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -40,4 +44,3 @@ const animalSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Animal", animalSchema);
-

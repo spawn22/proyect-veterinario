@@ -1,6 +1,7 @@
 import Label from "./Label";
 import Button from "./Button";
 import { Input } from "./Input";
+import { useEffect } from "react";
 function ShiftForm({
   isFormVisible,
   shiftToEdit,
@@ -11,6 +12,18 @@ function ShiftForm({
   handleEditShifts,
   handleCancelEdit,
 }) {
+  useEffect(() => {
+    // Si hay una cita por editar, se establece su información en el formulario
+    if (shiftToEdit) {
+      setShiftData({
+        ...shiftData,
+        description: shiftToEdit.description,
+        date: new Date(shiftToEdit.date).toISOString().slice(0, 10), // se convierte a ISO y se extrae solo la fecha (formato yyyy-MM-dd)
+        start_time: shiftToEdit.start_time,
+      });
+    }
+  }, [shiftToEdit]);
+
   return (
     <div>
       {isFormVisible && (

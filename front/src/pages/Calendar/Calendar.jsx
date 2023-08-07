@@ -26,6 +26,7 @@ function Calendar() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [shiftToEdit, setShiftToEdit] = useState(null);
+
   useEffect(() => {
     toast.promise(
       getShifts(),
@@ -100,9 +101,7 @@ function Calendar() {
       }
     });
   };
-  // deleteShifts(id);
-  // toast.success("Turno eliminado correctamente", { duration: 2000 });
-
+  
   // Función para manejar el evento de edición
   const handleEditShifts = (e) => {
     e.preventDefault();

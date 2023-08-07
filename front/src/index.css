@@ -2,34 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Custom Font";
-  src: url("./GoldplayAlt-Black.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-}
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: #212d38;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  --s: 119px; /* control the size*/
-  --c1: #084c7f;
-  --c2: #82807d;
-
-  --t: calc(var(--s) / 10); /* control the thickness */
-  --_c: #0000 calc(98% - var(--t)), var(--c1) calc(100% - var(--t)) 98%, #0000;
-  --_s: calc(2 * var(--s)) calc(5 * var(--s) / 2);
-  --_r0: /var(--_s) radial-gradient(calc(var(--s) / 2) at 0 20%, var(--_c));
-  --_r1: /var(--_s) radial-gradient(calc(var(--s) / 2) at 100% 20%, var(--_c));
-  background: #212d38;
 }
