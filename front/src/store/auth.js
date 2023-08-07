@@ -32,9 +32,9 @@ export const useAuthStore = create((set) => ({
       const response = await instance.post("/login", data);
       if (response.status === 200) {
         const user = response.data;
-        set(() => ({ user }));
         toast.success("Usuario Logeado Exitosamente");
         toast.loading("Redireccionando...", { duration: 1000 });
+        set(() => ({ user }));
         return user;
       } else {
         throw new Error("Error al iniciar sesión");
