@@ -5,6 +5,7 @@ import { immer } from "zustand/middleware/immer";
 export const useAnimalStore = create(
   immer((set, get) => ({
     patients: [],
+    allPatients: [],
     patient: null,
     patientEdit: [],
     getAnimals: async () => {
@@ -12,6 +13,10 @@ export const useAnimalStore = create(
         const res = await instance.get("/patient");
         const data = res.data;
         set({ patients: data });
+
+        set((state) => ({
+          allPatients: state.patients,
+        }));
       } catch (error) {
         console.log(error);
       }
@@ -52,6 +57,39 @@ export const useAnimalStore = create(
       } catch (error) {
         set((state) => ({ errors: [...state.errors, error.res.data] }));
       } finally {
+        get().getAnimals();
+      }
+    },
+    filterAnimals: ( name, type) => {
+      if(name !== ''){
+        if( type !== ''){
+          set((state) => ({
+            allPatients: state.allPatients.filter((patient) =>
+              patient.type.toLowerCase().includes(type.toLowerCase().trim())
+            ),
+          }))
+        }
+        set((state) => ({
+          patients: state.allPatients.filter((patient) =>
+            patient.name.toLowerCase().includes(name.toLowerCase().trim())
+          ),
+        }));
+      }
+      if(type !== ''){
+        if( name !== ''){
+          set((state) => ({
+            allPatients: state.allPatients.filter((patient) =>
+              patient.name.toLowerCase().includes(name.toLowerCase().trim())
+            ),
+          }))
+        }
+        set((state) => ({
+          patients: state.allPatients.filter((patient) =>
+            patient.type.toLowerCase().includes(type.toLowerCase().trim())
+          ),
+        }));
+      }
+      if (type === "" && name === '') {
         get().getAnimals();
       }
     },
