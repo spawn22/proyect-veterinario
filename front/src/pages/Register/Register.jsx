@@ -105,13 +105,10 @@ function Register() {
       default:
         break;
     }
-    // Verificar si todos los campos están llenos
   };
 
   return (
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
-      
-
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md px-8 py-6 bg-white rounded-lg shadow-md"

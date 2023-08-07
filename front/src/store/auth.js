@@ -11,7 +11,6 @@ export const useAuthStore = create((set) => ({
         console.log(user);
         set(() => ({ user }));
         toast.success("Usuario Registrado");
-
         return user;
       } else {
         throw new Error("Registration failed: Invalid input data");
