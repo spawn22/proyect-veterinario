@@ -92,7 +92,7 @@ function Login() {
           <Input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 "
             onChange={handleInputChange}
           />
