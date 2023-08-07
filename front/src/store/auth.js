@@ -8,7 +8,6 @@ export const useAuthStore = create((set) => ({
       const response = await instance.post("/register", data);
       if (response.status === 200) {
         const user = response.data ? response.data : null;
-        console.log(user);
         set(() => ({ user }));
         toast.success("Usuario Registrado");
         return user;
@@ -33,7 +32,6 @@ export const useAuthStore = create((set) => ({
       const response = await instance.post("/login", data);
       if (response.status === 200) {
         const user = response.data;
-        console.log(user);
         set(() => ({ user }));
         toast.success("Usuario Logeado Exitosamente");
         onSuccess(); // Llamamos a onSuccess si el inicio de sesión es exitoso
@@ -58,6 +56,9 @@ export const useAuthStore = create((set) => ({
   logout: async () => {
     await instance.post("/logout");
     Cookies.remove("accessToken"); // Borramos la cookie que contiene el token
+    Cookies.remove("refreshToken"); // Borramos la cookie que contiene el token de refresco
+    localStorage.removeItem("accessToken"); // Borramos el token que se guarda en el localStorage")
+    localStorage.removeItem("refreshToken"); // Borramos el token de refresco que se guarda en el localStorage
     set(() => ({ user: null }));
   },
   refreshToken: async () => {
