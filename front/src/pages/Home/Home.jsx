@@ -1,5 +1,5 @@
-import AnimalCards from "./AnimalCards";
-import AnimalForm from "./AnimalForm";
+import AnimalCards from "../../components/AnimalCards";
+import AnimalForm from "../../components/AnimalForm";
 
 const Home = () => {
   return (

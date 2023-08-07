@@ -1,7 +1,7 @@
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { useAnimalStore } from "../../store/animalStore";
+import { useAnimalStore } from "../store/animalStore";
 
 const AnimalCard = ({ patient }) => {
   const { _id, name, owner, type, age, gender, breed, weight } = patient;

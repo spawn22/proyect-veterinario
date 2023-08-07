@@ -1,6 +1,6 @@
-import useErrors from "../../hooks/useErrors";
-import { useAnimal, initialState } from "../../hooks/useAnimal";
-import { useAnimalStore } from "../../store/animalStore";
+import useErrors from "../hooks/useErrors";
+import { useAnimal, initialState } from "../hooks/useAnimal";
+import { useAnimalStore } from "../store/animalStore";
 import toast from "react-hot-toast";
 const AnimalForm = () => {
   const { animal, setAnimal } = useAnimal();

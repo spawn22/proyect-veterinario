@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAnimalStore } from "../../store/animalStore";
+import { useAnimalStore } from "../store/animalStore";
 import AnimalCard from "./AnimalCard";
 const AnimalCards = () => {
   const { patients } = useAnimalStore((state) => ({
