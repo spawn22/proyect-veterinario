@@ -66,8 +66,11 @@ export const login = async (req, res) => {
       { id: userFound._id },
       TOKEN_SECRET
     );
-    res.cookie("accessToken", accessToken);
-    res.cookie("refreshToken", refreshToken);
+    res.cookie("accessToken", accessToken, { sameSite: "None", secure: true });
+    res.cookie("refreshToken", refreshToken, {
+      sameSite: "None",
+      secure: true,
+    });
     res.json({
       message: "User Login Successfully",
       id: userFound._id,
@@ -109,8 +112,11 @@ export const refreshToken = async (req, res) => {
       id: user._id,
     });
 
-    res.cookie("accessToken", accessToken);
-    res.cookie("refreshToken", newRefreshToken);
+    res.cookie("accessToken", accessToken, { sameSite: "None", secure: true });
+    res.cookie("refreshToken", newRefreshToken, {
+      sameSite: "None",
+      secure: true,
+    });
 
     res.json({ message: "Access token refreshed" });
   } catch (error) {
