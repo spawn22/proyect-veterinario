@@ -33,7 +33,6 @@ export const useAuthStore = create((set) => ({
       if (response.status === 200) {
         const user = response.data;
         toast.success("Usuario Logeado Exitosamente");
-        toast.loading("Redireccionando...", { duration: 1000 });
         set(() => ({ user }));
         return user;
       } else {
