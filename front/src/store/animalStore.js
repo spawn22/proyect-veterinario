@@ -64,7 +64,7 @@ export const useAnimalStore = create(
      }));
  
        if(patients.length === 0 || name === ''){
-         get().getPatients()
+         get().getAnimals()
        }
    },
   }))
