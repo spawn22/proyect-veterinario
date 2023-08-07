@@ -9,12 +9,21 @@ import shiftRoutes from "./routes/shift.routes.js";
 
 const app = express();
 const corsOptions = {
-    origin: "http://localhost:5173",
-    credentials: true,
-  };
-
+  origin: "http://localhost:5173",
+  credentials: true,
+};
 
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
