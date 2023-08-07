@@ -17,7 +17,7 @@ function Landing() {
     <div className="min-h-screen bg-gray-100">
       <div className="relative">
         <Carousel />
-        <div className="absolute inset-0 z-10 flex flex-col justify-center items-center top-[25rem]">
+        <div className="absolute inset-0 z-10 flex flex-col justify-center items-center top-[40vh]">
           <h1 className="text-5xl font-extrabold  mb-4 text-black text-center">
             ¡Bienvenido a Tu Agenda!
           </h1>
