@@ -8,10 +8,8 @@ export const useAuthStore = create((set) => ({
       const response = await instance.post("/register", data);
       if (response.status === 200) {
         const user = response.data ? response.data : null;
-        console.log(user);
         set(() => ({ user }));
         toast.success("Usuario Registrado");
-
         return user;
       } else {
         throw new Error("Registration failed: Invalid input data");
@@ -34,7 +32,6 @@ export const useAuthStore = create((set) => ({
       const response = await instance.post("/login", data);
       if (response.status === 200) {
         const user = response.data;
-        console.log(user);
         set(() => ({ user }));
         toast.success("Usuario Logeado Exitosamente");
         onSuccess(); // Llamamos a onSuccess si el inicio de sesión es exitoso
@@ -65,7 +62,6 @@ export const useAuthStore = create((set) => ({
     try {
       const res = await instance.post("/refresh");
       if (res.status === 200) {
-        console.log(res);
         window.location.reload();
       }
       return res.data;
