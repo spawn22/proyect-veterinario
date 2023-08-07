@@ -9,7 +9,7 @@ const AnimalCards = () => {
     patients: state.patients,
   }));
   const { getAnimals } = useAnimalStore();
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const { filterAnimalsName } = useAnimalStore();
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,7 +29,7 @@ const AnimalCards = () => {
 
   useEffect(()=>{
     filterAnimalsName(searchTerm)
-  },[searchTerm])
+  },[searchTerm, filterAnimalsName])
 
   useEffect(() => {
     toast.promise(
