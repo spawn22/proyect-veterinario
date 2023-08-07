@@ -55,6 +55,18 @@ export const useAnimalStore = create(
         get().getAnimals();
       }
     },
+    filterAnimalsName: (name) => {
+      const { patients } = get((state) => {
+        state.patients
+      })
+      set((state) => ({
+       patients: state.patients.filter((patient) => patient.name.toLowerCase().includes(name.toLowerCase())),
+     }));
+ 
+       if(patients.length === 0 || name === ''){
+         get().getPatients()
+       }
+   },
   }))
 );
 
