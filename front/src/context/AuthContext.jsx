@@ -13,7 +13,11 @@ export const AuthProvider = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/login" || location.pathname === "/register") {
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/"
+    ) {
       setLoading(false);
       return;
     }
