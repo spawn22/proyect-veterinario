@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -61,6 +62,8 @@ export const AuthProvider = ({ children }) => {
         errors,
         setErrors,
         loading,
+        isButtonLoading,
+        setIsButtonLoading,
       }}
     >
       {children}
