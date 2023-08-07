@@ -11,9 +11,8 @@ const AnimalCards = () => {
   const { getAnimals } = useAnimalStore();
   const ITEMS_PER_PAGE = 4;
   const [currentPage, setCurrentPage] = useState(1);
-  const { filterAnimalsName } = useAnimalStore();
-  const { filterAnimalsType } = useAnimalStore();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { filterAnimals } = useAnimalStore();
+  const [searchTermName, setSearchTerm] = useState('');
   const [searchTermType, setSearchTermType] = useState('');
   const shiftedPatients = patients?.slice(
     currentPage > 1 ? (currentPage - 1) * ITEMS_PER_PAGE : 0,
@@ -25,7 +24,7 @@ const AnimalCards = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  const handleSearch = (e) =>{
+  const handleSearchName = (e) =>{
     setSearchTerm(e.target.value)
   }
   const handleSearchType = (e) =>{
@@ -33,12 +32,8 @@ const AnimalCards = () => {
   }
 
   useEffect(()=>{
-    filterAnimalsName(searchTerm)
-  },[searchTerm, filterAnimalsName, searchTermType, filterAnimalsType])
-  
-  useEffect(()=>{
-    filterAnimalsType(searchTermType)
-  },[searchTermType, filterAnimalsType])
+    filterAnimals(searchTermName,searchTermType)
+  },[searchTermType,searchTermName, filterAnimals])
 
   useEffect(() => {
     toast.promise(
@@ -72,8 +67,8 @@ const AnimalCards = () => {
             type="text"
             placeholder="Nombre de mascota"
             className="px-2 py-1 border border-gray-300 rounded-md w-[100%]"
-            value={searchTerm}
-            onChange={handleSearch}
+            value={searchTermName}
+            onInput={handleSearchName}
           />
       </div>
       <div className=" mr-4">
@@ -86,11 +81,18 @@ const AnimalCards = () => {
           />
       </div>
       <ul className=" grid gap-6 md:grid md:grid-cols-1 lg:grid-cols-1 lg:gap-4 xl:grid xl:grid-cols-2 2xl:grid 2xl:grid-col-3 mt-2">
-        {shiftedPatients.map((patient) => (
+        {
+        shiftedPatients.length >= 1? 
+        shiftedPatients.map((patient) => (
           <li key={patient.id}>
             <AnimalCard patient={patient} />
           </li>
-        ))}
+          
+        )):
+        <h3>No se encontraron animales, porfavor revisa los filtros: 
+          {`Nombre:${searchTermName} , tipo: ${searchTermType}`}
+        </h3>
+        }
       </ul>
       {patients?.length > ITEMS_PER_PAGE && (
         <PaginationTable
