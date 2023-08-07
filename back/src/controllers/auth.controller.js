@@ -58,13 +58,12 @@ export const login = async (req, res) => {
     const accessToken = await createAccessToken(
       {
         id: userFound._id,
-        httpOnly: true,
       },
       TOKEN_SECRET
     );
 
     const refreshToken = await createRefreshToken(
-      { id: userFound._id, httpOnly: true },
+      { id: userFound._id },
       TOKEN_SECRET
     );
     res.cookie("accessToken", accessToken);
@@ -105,11 +104,9 @@ export const refreshToken = async (req, res) => {
     }
     const accessToken = await createAccessToken({
       id: user._id,
-      httpOnly: true,
     });
     const newRefreshToken = await createRefreshToken({
       id: user._id,
-      httpOnly: true,
     });
 
     res.cookie("accessToken", accessToken);
