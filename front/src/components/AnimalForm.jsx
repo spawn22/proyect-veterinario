@@ -1,57 +1,63 @@
 import useErrors from "../hooks/useErrors";
-import { useAnimal, initialState } from "../hooks/useAnimal";
 import { useAnimalStore } from "../store/animalStore";
 import toast from "react-hot-toast";
+import LabelAnimal from "./LabelAnimal";
+import ButtonAnimal from "./ButtonAnimal";
+import useForm from "../hooks/useForm";
+import InputAnimal from "./InputAnimal";
+
+const initialValues = {
+  name: "",
+  owner: "",
+  type: "",
+  age: "",
+  gender: "",
+  breed: "",
+  weight: "",
+};
+
 const AnimalForm = () => {
-  const { animal, setAnimal } = useAnimal();
-  const { name, owner, type, age, gender, breed, weight } = animal;
+  const form = useForm({ initialValues });
 
   const { error, setError } = useErrors();
 
   const registerAnimal = useAnimalStore((state) => state.registerAnimal);
 
-  const handleChange = (event) => {
-    setAnimal({
-      ...animal,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const data = {
-    name,
-    owner,
-    type,
-    age: Number(age),
-    gender,
-    breed,
-    weight: Number(weight),
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const { fields, setFields } = form;
     //Valida que estén llenos todos los inputs
     if (
-      !name.trim() ||
-      !owner.trim() ||
-      !type.trim() ||
-      !age.trim() ||
-      !gender.trim() ||
-      !breed.trim() ||
-      !weight.trim()
+      !fields.name.trim() ||
+      !fields.owner.trim() ||
+      !fields.type.trim() ||
+      !fields.age.trim() ||
+      !fields.gender.trim() ||
+      !fields.breed.trim() ||
+      !fields.weight.trim()
     ) {
       setError(true);
       return;
     }
+    const data = {
+      name: fields.name,
+      owner: fields.owner,
+      type: fields.type,
+      age: Number(fields.age),
+      gender: fields.gender,
+      breed: fields.breed,
+      weight: Number(fields.weight),
+    };
 
     await registerAnimal(data);
     toast.success("Animal registrado con éxito");
     setError(false);
 
-    //Reinciar el form
-    setAnimal(initialState);
+    // Reinciar el form
+    setFields(initialValues);
   };
   return (
-    <div >
+    <div>
       <h1 className="text-zinc-50 mb-4 font-bold text-2xl flex gap-2 mt-5 ">
         Crea tus Pacientes{" "}
         <span className="text-sky-300 ">Desde este Formulario</span>
@@ -66,89 +72,37 @@ const AnimalForm = () => {
         <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
           Registrar Paciente
         </h2>
-        <label className="text-black block w-full text-left mb-2">
+        <LabelAnimal>
           Nombre
-          <input
-            type="text"
-            name="name"
-            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
-            placeholder="Nombre Mascota"
-            onChange={handleChange}
-            value={name}
-          />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+          <InputAnimal type="text" {...form.getInput("name")} />
+        </LabelAnimal>
+        <LabelAnimal>
           Nombre Dueño
-          <input
-            type="text"
-            name="owner"
-            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
-            placeholder="Nombre Dueño de la Mascota"
-            onChange={handleChange}
-            value={owner}
-          />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+          <InputAnimal type="text" {...form.getInput("owner")} />
+        </LabelAnimal>
+        <LabelAnimal>
           Tipo
-          <input
-            type="text"
-            name="type"
-            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
-            placeholder="Tipo"
-            onChange={handleChange}
-            value={type}
-          />
-        </label>
+          <InputAnimal type="text" {...form.getInput("type")} />
+        </LabelAnimal>
 
-        <label className="text-black block w-full text-left mb-2">
+        <LabelAnimal>
           Edad
-          <input
-            type="number"
-            name="age"
-            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
-            onChange={handleChange}
-            value={age}
-          />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+          <InputAnimal type="number" {...form.getInput("age")} />
+        </LabelAnimal>
+        <LabelAnimal>
           Género
-          <input
-            type="text"
-            name="gender"
-            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
-            onChange={handleChange}
-            placeholder="macho - hembra"
-            value={gender}
-          />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+          <InputAnimal type="text" {...form.getInput("gender")} />
+        </LabelAnimal>
+        <LabelAnimal>
           Raza
-          <input
-            type="text"
-            name="breed"
-            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
-            onChange={handleChange}
-            placeholder="labrador"
-            value={breed}
-          />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+          <InputAnimal type="text" {...form.getInput("breed")} />
+        </LabelAnimal>
+        <LabelAnimal>
           Peso
-          <input
-            type="number"
-            name="weight"
-            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
-            onChange={handleChange}
-            value={weight}
-          />
-        </label>
+          <InputAnimal type="number" {...form.getInput("weight")} />
+        </LabelAnimal>
 
-        <button
-          type="submit"
-          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Agregar Paciente
-        </button>
+        <ButtonAnimal>Agregar Paciente</ButtonAnimal>
       </form>
     </div>
   );
