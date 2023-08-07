@@ -1,39 +1,46 @@
 import { createContext, useState, useEffect } from "react";
 import { useAuthStore } from "../store/auth";
 import Cookies from "js-cookie";
-
+import { useLocation } from "react-router-dom";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const verifyToken = useAuthStore((state) => state.verify);
+  const refreshToken = useAuthStore((state) => state.refreshToken);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/"
+    ) {
+      setLoading(false);
+      return;
+    }
     const checkLogin = async () => {
       const cookies = Cookies.get();
-      if (!cookies.accessToken) {
-        setIsAuthenticated(false);
-        setLoading(false);
-        return;
-      }
       try {
-        const res = await verifyToken(cookies.accessToken);
-        if (!res.data) {
-          setIsAuthenticated(false);
-          setLoading(false);
-          return;
-        }
+        await verifyToken(cookies.accessToken);
         setIsAuthenticated(true);
         setLoading(false);
       } catch (error) {
-        setIsAuthenticated(false);
-        setLoading(false);
+        if (!cookies.accessToken) {
+          await refreshToken();
+          setIsAuthenticated(true);
+          setLoading(false);
+        }
+        if (!cookies.refreshToken && !cookies.accessToken) {
+          setIsAuthenticated(false);
+          setLoading(false);
+        }
       }
     };
     checkLogin();
-  }, [verifyToken]);
+  }, [verifyToken, refreshToken, location]);
 
   return (
     <AuthContext.Provider

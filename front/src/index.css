@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Custom Font';
-  src: url('./GoldplayAlt-Black.ttf') format('truetype');
+  font-family: "Custom Font";
+  src: url("./GoldplayAlt-Black.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
@@ -14,7 +14,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -32,5 +31,5 @@
   --_s: calc(2 * var(--s)) calc(5 * var(--s) / 2);
   --_r0: /var(--_s) radial-gradient(calc(var(--s) / 2) at 0 20%, var(--_c));
   --_r1: /var(--_s) radial-gradient(calc(var(--s) / 2) at 100% 20%, var(--_c));
-  background: #212D38;
+  background: #212d38;
 }

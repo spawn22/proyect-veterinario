@@ -123,7 +123,7 @@ function Register() {
           <Input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder="Nombre"
             className={`w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               errors.name ? "border-red-500" : ""
             }`}
@@ -134,7 +134,7 @@ function Register() {
           <Input
             type="text"
             name="lastName"
-            placeholder="Last Name"
+            placeholder="Apellido"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />
@@ -143,7 +143,7 @@ function Register() {
           <Input
             type="text"
             name="username"
-            placeholder="Username"
+            placeholder="Usuario"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />
@@ -173,7 +173,7 @@ function Register() {
           <Input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleInputChange}
           />

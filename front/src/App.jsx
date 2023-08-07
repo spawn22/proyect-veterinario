@@ -14,9 +14,10 @@ import AnimalEdit from "./pages/AnimalEdit/AnimalEdit";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Toaster />
+
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Register />} />
@@ -30,8 +31,8 @@ function App() {
             <Route path="/error404" element={<Error404></Error404>} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
