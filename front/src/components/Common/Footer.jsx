@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 const Footer = () => {
   return (
-    <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+    <footer className="footer footer-center p-10 bg-navigation-colors rounded">
       <div className="grid grid-flow-col gap-4">
         <NavLink className="link link-hover" to={"/error404"}>Sobre nosotros</NavLink>
         <NavLink className="link link-hover" to={"/error404"}>Contacto</NavLink>
