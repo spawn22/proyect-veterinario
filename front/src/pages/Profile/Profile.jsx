@@ -1,6 +1,6 @@
 import { useProfileStore } from "../../store/profile";
 import { useEffect } from "react";
-
+import toast from "react-hot-toast";
 const imageGender = [
   {
     Masculino:
@@ -17,7 +17,19 @@ function Profile() {
   const profile = useProfileStore((state) => state.profile);
 
   useEffect(() => {
-    getProfileData();
+    toast.promise(
+      getProfileData(),
+      {
+        loading: "Cargando perfil...",
+        success: "Perfil cargado",
+        error: "Error al cargar perfil",
+      },
+      {
+        success: {
+          duration: 2000,
+        },
+      }
+    );
   }, [getProfileData]);
 
   const genderImage = imageGender.find((gender) => gender[profile.gender]);

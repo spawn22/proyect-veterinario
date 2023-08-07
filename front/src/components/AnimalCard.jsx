@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useAnimalStore } from "../store/animalStore";
 
 const AnimalCard = ({ patient }) => {
-  const { _id, name, owner, type, age, gender, breed, weight } = patient;
+  const { _id, name, owner, type, age, gender, breed, weight, description } =
+    patient;
   const { deleteAnimal } = useAnimalStore();
   const navigate = useNavigate();
 
@@ -13,7 +14,7 @@ const AnimalCard = ({ patient }) => {
       title: "Desea Eliminar esta mascota?",
       icon: "warning",
       showCancelButton: true,
-      cancelButtonText:'Cancelar',
+      cancelButtonText: "Cancelar",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Confirma!",
@@ -47,6 +48,10 @@ const AnimalCard = ({ patient }) => {
       </p>
       <p>
         <span className="font-bold">Peso:</span> <span>{weight} kg</span>
+      </p>
+      <p>
+        <span className="font-bold">Historia Clinica:</span>{" "}
+        <span>{description}</span>
       </p>
 
       <button

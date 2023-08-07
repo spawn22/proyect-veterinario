@@ -26,6 +26,7 @@ function Calendar() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [shiftToEdit, setShiftToEdit] = useState(null);
+
   useEffect(() => {
     toast.promise(
       getShifts(),
@@ -100,9 +101,7 @@ function Calendar() {
       }
     });
   };
-  // deleteShifts(id);
-  // toast.success("Turno eliminado correctamente", { duration: 2000 });
-
+  
   // Función para manejar el evento de edición
   const handleEditShifts = (e) => {
     e.preventDefault();
@@ -146,7 +145,7 @@ function Calendar() {
           <Input
             type="text"
             placeholder="Buscar nombre Paciente"
-            className="px-2 py-1 border border-gray-300 rounded-md w-[100%]"
+            className="px-2 py-1 border border-gray-300 rounded-md w-[100%] bg-gray-900 text-white"
             value={searchTerm}
             onChange={handleSearch}
           />
