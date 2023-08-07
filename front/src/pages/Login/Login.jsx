@@ -29,8 +29,12 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await loginUser(formFields, toast, () => {
-      context.setIsAuthenticated(true);
-      navigate("/home");
+      // La función se ejecuta solo si el inicio de sesión es exitoso
+      toast.loading("Redireccionando...", { duration: 1000 });
+      setTimeout(() => {
+        context.setIsAuthenticated(true);
+        navigate("/home");
+      }, 3000); // Espera 3 segundos antes de redirigir al usuario al home
     });
   };
 
