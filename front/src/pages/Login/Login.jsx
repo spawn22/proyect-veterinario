@@ -96,7 +96,7 @@ function Login() {
         </div>
         <Link
           to="/register"
-          className="block mt-5 text-blue-500 hover:text-blue-700 "
+          className="flex justify-center mt-5 text-blue-500 hover:text-blue-700 "
         >
           ¿No estás registrado? Regístrate aquí
         </Link>
