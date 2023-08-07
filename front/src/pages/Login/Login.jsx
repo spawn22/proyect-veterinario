@@ -12,7 +12,7 @@ function Login() {
   const navigate = useNavigate();
 
   const loginUser = useAuthStore((state) => state.loginUser);
-  
+
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
@@ -64,7 +64,7 @@ function Login() {
       default:
         break;
     }
-  }
+  };
 
   return (
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
@@ -101,14 +101,13 @@ function Login() {
         >
           ¿No estás registrado? Regístrate aquí
         </Link>
-        <button
+        <Button
           type="submit"
           className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          // eslint-disable-next-line react/no-unknown-property
           isLoading={context.isButtonLoading}
         >
           {context.isButtonLoading ? "Cargando..." : "Iniciar Sesión"}
-        </button>
+        </Button>
       </form>
     </div>
   );
