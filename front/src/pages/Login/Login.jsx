@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input";
 import Button from "../../components/Button";
 import toast from "react-hot-toast";
+
 function Login() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   const loginUser = useAuthStore((state) => state.loginUser);
-
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
@@ -28,8 +29,10 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsButtonLoading(true);
     await loginUser(formFields, toast);
     context.setIsAuthenticated(true);
+    setIsButtonLoading(false);
     navigate("/home");
   };
 
@@ -102,8 +105,9 @@ function Login() {
         <Button
           type="submit"
           className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={isButtonLoading}
         >
-          Inicia Sesion
+          {isButtonLoading ? "Cargando..." : "Iniciar Sesión"}
         </Button>
       </form>
     </div>
