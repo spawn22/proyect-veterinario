@@ -105,7 +105,6 @@ function Register() {
       default:
         break;
     }
-    // Verificar si todos los campos están llenos
   };
 
   return (

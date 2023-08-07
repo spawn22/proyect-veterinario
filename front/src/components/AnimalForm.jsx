@@ -5,7 +5,7 @@ import useForm from "../hooks/useForm";
 import { Input } from "./Input";
 import Label from "./Label";
 import Button from "./Button";
-
+import { useState } from "react";
 const initialValues = {
   name: "",
   owner: "",
@@ -24,6 +24,9 @@ const AnimalForm = () => {
 
   const registerAnimal = useAnimalStore((state) => state.registerAnimal);
 
+  // Se define un estado para el texto del botón que indica cuando se está cargando
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { fields, setFields } = form;
@@ -39,6 +42,7 @@ const AnimalForm = () => {
       !fields.description.trim()
     ) {
       setError(true);
+      toast.error("Todos los campos son obligatorios", error);
       return;
     }
     const data = {
@@ -51,12 +55,13 @@ const AnimalForm = () => {
       weight: Number(fields.weight),
       description: fields.description,
     };
-
+    setIsButtonLoading(true);
     await registerAnimal(data);
     toast.success("Animal registrado con éxito");
     setError(false);
 
     // Reinciar el form
+    setIsButtonLoading(false);
     setFields(initialValues);
   };
   return (
@@ -69,9 +74,6 @@ const AnimalForm = () => {
         onSubmit={handleSubmit}
         className="w-full mt-6 w-md md:w-full xl:max-w-md px-8 py-6 bg-zinc-50 rounded-lg shadow-md"
       >
-        {error ? (
-          <p className="w-full bg-black">Todos los campos son obligatorios</p>
-        ) : null}
         <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
           Registrar Paciente
         </h2>
@@ -157,8 +159,9 @@ const AnimalForm = () => {
         <Button
           type="submit"
           className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={isButtonLoading}
         >
-          Agregar Paciente
+          {isButtonLoading ? "Cargando..." : "Agregar Paciente"}
         </Button>
       </form>
     </div>

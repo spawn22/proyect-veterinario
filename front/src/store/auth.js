@@ -57,6 +57,9 @@ export const useAuthStore = create((set) => ({
   logout: async () => {
     await instance.post("/logout");
     Cookies.remove("accessToken"); // Borramos la cookie que contiene el token
+    Cookies.remove("refreshToken"); // Borramos la cookie que contiene el token de refresco
+    localStorage.removeItem("accessToken"); // Borramos el token que se guarda en el localStorage")
+    localStorage.removeItem("refreshToken"); // Borramos el token de refresco que se guarda en el localStorage
     set(() => ({ user: null }));
   },
   refreshToken: async () => {
