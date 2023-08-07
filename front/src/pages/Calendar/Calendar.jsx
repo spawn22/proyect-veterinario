@@ -145,7 +145,7 @@ function Calendar() {
           <Input
             type="text"
             placeholder="Buscar nombre Paciente"
-            className="px-2 py-1 border border-gray-300 rounded-md w-[100%]"
+            className="px-2 py-1 border border-gray-300 rounded-md w-[100%] bg-gray-900 text-white"
             value={searchTerm}
             onChange={handleSearch}
           />
