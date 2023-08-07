@@ -16,7 +16,10 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Toaster />
+      <Toaster 
+        position="top-center"
+        containerClassName="mt-10 "
+        />
 
         <Routes>
           <Route path="/" element={<Landing />} />
