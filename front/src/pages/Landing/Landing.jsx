@@ -21,9 +21,9 @@ function Landing() {
           <h1 className="text-5xl font-extrabold  mb-4 text-black text-center">
             ¡Bienvenido a Tu Agenda!
           </h1>
-          <Link to="/register">
+          <Link to="/login">
             <Button className="px-6 py-2 bg-blue-600 hover:bg-blue-900 text-white rounded-md">
-              Registrarse
+              Iniciar Sesion
             </Button>
           </Link>
         </div>
