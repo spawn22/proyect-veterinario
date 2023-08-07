@@ -64,8 +64,7 @@ function Login() {
       default:
         break;
     }
-    // Verificar si todos los campos están llenos
-  };
+  }
 
   return (
     <div className="flex justify-center items-center h-screen max-h-[55rem] ">
@@ -102,13 +101,13 @@ function Login() {
         >
           ¿No estás registrado? Regístrate aquí
         </Link>
-        <Button
+        <button
           type="submit"
           className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={context.isButtonLoading}
         >
           {context.isButtonLoading ? "Cargando..." : "Iniciar Sesión"}
-        </Button>
+        </button>
       </form>
     </div>
   );
