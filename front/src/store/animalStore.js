@@ -60,13 +60,25 @@ export const useAnimalStore = create(
         state.patients
       })
       set((state) => ({
-       patients: state.patients.filter((patient) => patient.name.toLowerCase().includes(name.toLowerCase())),
+       patients: state.patients.filter((patient) => patient.name.toLowerCase().includes(name.toLowerCase().trim())),
      }));
  
        if(patients.length === 0 || name === ''){
          get().getAnimals()
        }
    },
+   filterAnimalsType: (type) => {
+    const { patients } = get((state) => {
+      state.patients
+    })
+    set((state) => ({
+     patients: state.patients.filter((patient) => patient.type.toLowerCase().includes(type.toLowerCase().trim())),
+   }));
+
+     if(patients.length === 0 || type === ''){
+       get().getAnimals()
+     }
+ }
   }))
 );
 
