@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import { Input } from "../../components/Input";
 import ShiftForm from "../../components/ShiftForm";
 import ShiftTable from "../../components/ShiftTable";
+import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 
 function Calendar() {
@@ -84,9 +85,23 @@ function Calendar() {
 
   const handleDeleteShifts = (e, id) => {
     e.preventDefault();
-    deleteShifts(id);
-    toast.success("Turno eliminado correctamente", { duration: 2000 });
+    Swal.fire({
+      title: "Desea Eliminar este Turno?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Confirma!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteShifts(id);
+        Swal.fire("Eliminada!", "La mascota fue eliminada.", "success");
+      }
+    });
   };
+  // deleteShifts(id);
+  // toast.success("Turno eliminado correctamente", { duration: 2000 });
 
   // Función para manejar el evento de edición
   const handleEditShifts = (e) => {

@@ -1,10 +1,10 @@
 import useErrors from "../hooks/useErrors";
 import { useAnimalStore } from "../store/animalStore";
 import toast from "react-hot-toast";
-import LabelAnimal from "./LabelAnimal";
-import ButtonAnimal from "./ButtonAnimal";
 import useForm from "../hooks/useForm";
-import InputAnimal from "./InputAnimal";
+import { Input } from "./Input";
+import Label from "./Label";
+import Button from "./Button";
 
 const initialValues = {
   name: "",
@@ -72,37 +72,82 @@ const AnimalForm = () => {
         <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
           Registrar Paciente
         </h2>
-        <LabelAnimal>
+        <Label className="text-black block w-full text-left mb-2">
           Nombre
-          <InputAnimal type="text" {...form.getInput("name")} />
-        </LabelAnimal>
-        <LabelAnimal>
+          <Input
+            type="text"
+            placeholder="Nombre"
+            {...form.getInput("name")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Nombre Dueño
-          <InputAnimal type="text" {...form.getInput("owner")} />
-        </LabelAnimal>
-        <LabelAnimal>
+          <Input
+            type="text"
+            placeholder="Nombre del Dueño"
+            {...form.getInput("owner")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Tipo
-          <InputAnimal type="text" {...form.getInput("type")} />
-        </LabelAnimal>
+          <Input
+            type="text"
+            placeholder="Tipo de Mascota"
+            {...form.getInput("type")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
 
-        <LabelAnimal>
+        <Label className="text-black block w-full text-left mb-2">
           Edad
-          <InputAnimal type="number" {...form.getInput("age")} />
-        </LabelAnimal>
-        <LabelAnimal>
+          <Input
+            type="number"
+            placeholder="Edad de la Mascota"
+            {...form.getInput("age")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Género
-          <InputAnimal type="text" {...form.getInput("gender")} />
-        </LabelAnimal>
-        <LabelAnimal>
+          <Input
+            type="text"
+            placeholder="Género de la Mascota"
+            {...form.getInput("gender")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Raza
-          <InputAnimal type="text" {...form.getInput("breed")} />
-        </LabelAnimal>
-        <LabelAnimal>
+          <Input
+            type="text"
+            placeholder="Raza de la Mascota"
+            {...form.getInput("breed")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Peso
-          <InputAnimal type="number" {...form.getInput("weight")} />
-        </LabelAnimal>
+          <Input
+            placeholder="Peso de la Mascota"
+            min="0"
+            step="0.01"
+            max="1000"
+            pattern="[0-9]*(\.[0-9]{1,2})?"
+            title="Solo se permiten nÚmeros y decimales"
+            type="number"
+            {...form.getInput("weight")}
+            className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
+          />
+        </Label>
 
-        <ButtonAnimal>Agregar Paciente</ButtonAnimal>
+        <Button
+          type="submit"
+          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Agregar Paciente
+        </Button>
       </form>
     </div>
   );

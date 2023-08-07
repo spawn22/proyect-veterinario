@@ -104,9 +104,8 @@ function ShiftTable({
                       <Button
                         onClick={(e) => {
                           e.preventDefault();
-                          if (window.confirm("¿Desea eliminar este turno?")) {
-                            handleDeleteShifts(e, shift?._id);
-                          }
+
+                          handleDeleteShifts(e, shift?._id);
                         }}
                         className="mr-2"
                       >

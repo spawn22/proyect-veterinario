@@ -4,7 +4,9 @@ import useErrors from "../../hooks/useErrors";
 import { getAnimalById, useAnimalStore } from "../../store/animalStore";
 import { useRef } from "react";
 import toast from "react-hot-toast";
-
+import Label from "../../components/Label";
+import { Input } from "../../components/Input";
+import Button from "../../components/Button";
 const AnimalEdit = () => {
   const navigate = useNavigate();
   const [cancelEdit, setcancelEdit] = useState(false);
@@ -34,7 +36,7 @@ const AnimalEdit = () => {
       breed.current.value = animalToEdit.breed;
       weight.current.value = animalToEdit.weight;
     }
-  }, []);
+  }, [animalToEdit]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -87,82 +89,82 @@ const AnimalEdit = () => {
         <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
           Editar Paciente
         </h2>
-        <label className="text-black block w-full text-left mb-2">
+        <Label className="text-black block w-full text-left mb-2">
           Nombre
-          <input
+          <Input
             type="text"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             placeholder="Nombre Mascota"
             ref={name}
           />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Nombre Dueño
-          <input
+          <Input
             type="text"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             placeholder="Nombre Dueño de la Mascota"
             ref={owner}
           />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Tipo
-          <input
+          <Input
             type="text"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             placeholder="Tipo"
             ref={type}
           />
-        </label>
+        </Label>
 
-        <label className="text-black block w-full text-left mb-2">
+        <Label className="text-black block w-full text-left mb-2">
           Edad
-          <input
+          <Input
             type="number"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             ref={age}
           />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Género
-          <input
+          <Input
             type="text"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             placeholder="macho - hembra"
             ref={gender}
           />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Raza
-          <input
+          <Input
             type="text"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             placeholder="labrador"
             ref={breed}
           />
-        </label>
-        <label className="text-black block w-full text-left mb-2">
+        </Label>
+        <Label className="text-black block w-full text-left mb-2">
           Peso
-          <input
+          <Input
             type="number"
             className="w-full px-4 py-2 bg-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white mt-1"
             ref={weight}
           />
-        </label>
+        </Label>
 
-        <button
+        <Button
           type="submit"
           className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
         >
           Guardar
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
           className="px-4 py-3 bg-[#3da9fc] w-full text-[#fffffe] rounded-md hover:bg-gray-400"
           onClick={() => setcancelEdit(true)}
         >
           Cancelar
-        </button>
+        </Button>
       </form>
     </div>
   );
