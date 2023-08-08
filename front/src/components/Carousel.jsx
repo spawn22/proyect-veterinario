@@ -33,12 +33,12 @@ function Carousel() {
           alt={selectedImage.text}
           className="w-full h-full object-cover"
         />
+      </div>
         <div className="absolute bottom-0 left-0 right-0 px-4 py-6 text-zinc-950">
           <h1 className="text-3xl font-extrabold font-customFont mb-2">
             {selectedImage.text}
           </h1>
         </div>
-      </div>
     </div>
   );
 }
