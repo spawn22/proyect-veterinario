@@ -66,9 +66,10 @@ export const login = async (req, res) => {
       { id: userFound._id },
       TOKEN_SECRET
     );
-    res.cookie("accessToken", accessToken, { secure: true });
+    res.cookie("accessToken", accessToken, { secure: true, sameSite: "None" });
     res.cookie("refreshToken", refreshToken, {
       secure: true,
+      sameSite: "None",
     });
     res.json({
       message: "User Login Successfully",
