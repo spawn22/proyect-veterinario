@@ -18,7 +18,7 @@ export const useAnimalStore = create(
           allPatients: state.patients,
         }));
       } catch (error) {
-        console.log(error);
+        set(() => ({ errors: error.response.data.error }));
       }
     },
     registerAnimal: async (data) => {
@@ -60,14 +60,14 @@ export const useAnimalStore = create(
         get().getAnimals();
       }
     },
-    filterAnimals: ( name, type) => {
-      if(name !== ''){
-        if( type !== ''){
+    filterAnimals: (name, type) => {
+      if (name !== "") {
+        if (type !== "") {
           set((state) => ({
             allPatients: state.allPatients.filter((patient) =>
               patient.type.toLowerCase().includes(type.toLowerCase().trim())
             ),
-          }))
+          }));
         }
         set((state) => ({
           patients: state.allPatients.filter((patient) =>
@@ -75,13 +75,13 @@ export const useAnimalStore = create(
           ),
         }));
       }
-      if(type !== ''){
-        if( name !== ''){
+      if (type !== "") {
+        if (name !== "") {
           set((state) => ({
             allPatients: state.allPatients.filter((patient) =>
               patient.name.toLowerCase().includes(name.toLowerCase().trim())
             ),
-          }))
+          }));
         }
         set((state) => ({
           patients: state.allPatients.filter((patient) =>
@@ -89,7 +89,7 @@ export const useAnimalStore = create(
           ),
         }));
       }
-      if (type === "" && name === '') {
+      if (type === "" && name === "") {
         get().getAnimals();
       }
     },
