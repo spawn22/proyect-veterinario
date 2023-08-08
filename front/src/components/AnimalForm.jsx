@@ -23,6 +23,7 @@ const AnimalForm = () => {
   const form = useForm({ initialValues });
   const params = useParams();
   const navigate = useNavigate();
+  //Para saber si se está agregando o editando
   const [edit, setEdit] = useState(false);
   const { id } = params;
   const { error, setError } = useErrors();
