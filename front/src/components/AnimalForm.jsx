@@ -48,7 +48,6 @@ const AnimalForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { fields, setFields } = form;
-    console.log(fields);
     //Valida que estén llenos todos los inputs
     if (
       !fields.name.trim() ||
@@ -79,7 +78,6 @@ const AnimalForm = () => {
     setIsButtonLoading(true);
     if (edit) {
       const dataEdit = { ...data, id };
-      console.log(dataEdit);
       await putAnimal(dataEdit);
       toast.success("Animal modificado con éxito");
     } else {
