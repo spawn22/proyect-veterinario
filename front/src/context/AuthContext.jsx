@@ -24,7 +24,14 @@ export const AuthProvider = ({ children }) => {
     const checkLogin = async () => {
       const cookies = Cookies.get();
       localStorage.setItem("accessToken", cookies.accessToken);
-
+      const token = localStorage.getItem("accessToken");
+      if (!token || token === undefined) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setIsAuthenticated(false);
+      } else {
+        setIsAuthenticated(true);
+      }
       try {
         await verifyToken(cookies.accessToken);
         setIsAuthenticated(true);
@@ -44,14 +51,7 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, [verifyToken, refreshToken, location]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      setIsAuthenticated(false);
-    } else {
-      setIsAuthenticated(true);
-    }
-  }, []);
+  
 
   return (
     <AuthContext.Provider
