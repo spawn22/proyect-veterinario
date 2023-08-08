@@ -16,22 +16,19 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Toaster 
-        position="top-center"
-        containerClassName="mt-10"
-        />
+        <Toaster position="top-center" containerClassName="mt-10" />
 
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="*" element={<Error404 />} />
+          
           <Route element={<ProtectedRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/edit/:id" element={<AnimalEdit />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/error404" element={<Error404></Error404>} />
           </Route>
         </Routes>
       </AuthProvider>
