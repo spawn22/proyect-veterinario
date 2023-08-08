@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setIsAuthenticated(true);
       }
+
       try {
         await verifyToken(cookies.accessToken);
         setIsAuthenticated(true);

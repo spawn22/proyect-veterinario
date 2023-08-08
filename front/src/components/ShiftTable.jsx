@@ -14,10 +14,17 @@ function ShiftTable({
   const [currentPage, setCurrentPage] = useState(1);
 
   const ITEMS_PER_PAGE = 5;
-  const filteredShifts = shifts?.filter((shift) => {
-    const searchTermLower = searchTerm.toLowerCase();
-    return shift?.animal?.name?.toLowerCase()?.includes(searchTermLower);
-  });
+  const filteredShifts = shifts
+    ?.filter((shift) => {
+      const searchTermLower = searchTerm.toLowerCase();
+      return shift?.animal?.name?.toLowerCase()?.includes(searchTermLower);
+    })
+    .filter((shift) => {
+      const currentDate = moment().startOf("day");
+      const shiftDate = moment(shift.date, "YYYY-MM-DD").startOf("day");
+
+      return currentDate.isSameOrBefore(shiftDate); // Devuelve solo los turnos cuya fecha es igual o posterior al día actual
+    });
   const shiftedShifts = filteredShifts?.slice(
     currentPage > 1 ? (currentPage - 1) * ITEMS_PER_PAGE : 0,
     currentPage > 1 ? currentPage * ITEMS_PER_PAGE : ITEMS_PER_PAGE

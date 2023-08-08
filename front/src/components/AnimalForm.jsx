@@ -74,7 +74,7 @@ const AnimalForm = () => {
         onSubmit={handleSubmit}
         className="w-full mt-6 w-md md:w-full xl:max-w-md px-8 py-6 bg-zinc-50 rounded-lg shadow-md"
       >
-        <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
+        <h2 className="mb-6 text-3xl font-bold text-center text-blue-500">
           Registrar Paciente
         </h2>
         <Label className="text-black block w-full text-left mb-2">
@@ -158,7 +158,7 @@ const AnimalForm = () => {
 
         <Button
           type="submit"
-          className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 mt-4 text-white bg-sky-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={isButtonLoading}
         >
           {isButtonLoading ? "Cargando..." : "Agregar Paciente"}

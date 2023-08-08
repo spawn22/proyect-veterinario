@@ -70,7 +70,7 @@ function ShiftForm({
             >
               Fecha:
             </Label>
-            <Input
+            <input
               type="date"
               id="date"
               className="px-2 py-2 border border-gray-300 rounded-md bg-gray-900"
@@ -78,6 +78,7 @@ function ShiftForm({
               onChange={(event) =>
                 setShiftData({ ...shiftData, date: event.target.value })
               }
+              min={new Date().toISOString().slice(0, 10)}
             />
           </div>
           <div className="mb-2">
