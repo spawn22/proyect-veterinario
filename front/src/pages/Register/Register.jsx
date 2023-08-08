@@ -179,7 +179,7 @@ function Register() {
         </div>
         <Link
           to="/login"
-          className="block mt-4 text-blue-500 hover:text-blue-700"
+          className="flex justify-center mt-4 text-blue-500 hover:text-blue-700"
         >
           ¿Ya estás registrado? Inicia sesión aquí
         </Link>
