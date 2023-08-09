@@ -26,7 +26,7 @@ function Calendar() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [shiftToEdit, setShiftToEdit] = useState(null);
-
+  
   useEffect(() => {
     toast.promise(
       getShifts(),
@@ -101,7 +101,7 @@ function Calendar() {
       }
     });
   };
-  
+
   // Función para manejar el evento de edición
   const handleEditShifts = (e) => {
     e.preventDefault();

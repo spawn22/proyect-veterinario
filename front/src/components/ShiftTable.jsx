@@ -1,7 +1,7 @@
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Button from "./Button";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaginationTable from "./PaginationTable";
 function ShiftTable({
   shifts,
@@ -29,6 +29,7 @@ function ShiftTable({
     currentPage > 1 ? (currentPage - 1) * ITEMS_PER_PAGE : 0,
     currentPage > 1 ? currentPage * ITEMS_PER_PAGE : ITEMS_PER_PAGE
   );
+
   const totalPages = Math.ceil(
     (filteredShifts?.length - ITEMS_PER_PAGE) / ITEMS_PER_PAGE + 1
   );
@@ -36,6 +37,12 @@ function ShiftTable({
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    if (shiftedShifts.length === 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  }, [currentPage, shiftedShifts]);
 
   return (
     <div className="flex flex-col">
