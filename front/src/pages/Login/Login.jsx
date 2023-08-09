@@ -30,10 +30,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     context.setIsButtonLoading(true);
-    await loginUser(formFields, toast);
-    context.setIsAuthenticated(true);
-    context.setIsButtonLoading(false);
-    navigate("/home");
+    await loginUser(formFields, toast, () => {
+      context.setIsAuthenticated(true);
+      context.setIsButtonLoading(false);
+      navigate("/home");
+    });
   };
 
   const handleInputChange = (event) => {

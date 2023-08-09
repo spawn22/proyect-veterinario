@@ -26,7 +26,7 @@ export const useAuthStore = create((set) => ({
       }
     }
   },
-  loginUser: async (data, toast) => {
+  loginUser: async (data, toast, onSuccess) => {
     // Agregamos onSuccess como argumento para llamar a la función si el inicio de sesión es exitoso
     try {
       const response = await instance.post("/login", data);
@@ -34,6 +34,7 @@ export const useAuthStore = create((set) => ({
         const user = response.data;
         toast.success("Usuario Logeado Exitosamente");
         set(() => ({ user }));
+        onSuccess();
         return user;
       } else {
         throw new Error("Error al iniciar sesión");
