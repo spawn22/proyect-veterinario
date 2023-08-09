@@ -18,7 +18,7 @@ function Profile() {
 
   useEffect(() => {
     toast.promise(
-      getProfileData(),
+      getProfileData(toast),
       {
         loading: "Cargando perfil...",
         success: "Perfil cargado",

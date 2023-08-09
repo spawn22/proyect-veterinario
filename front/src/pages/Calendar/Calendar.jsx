@@ -26,10 +26,10 @@ function Calendar() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [shiftToEdit, setShiftToEdit] = useState(null);
-  
+
   useEffect(() => {
     toast.promise(
-      getShifts(),
+      getShifts(toast),
       {
         loading: "Cargando turnos...",
         success: "Turnos cargados",
@@ -62,7 +62,7 @@ function Calendar() {
       start_time: shiftData.start_time,
       animal: shiftData.selectPatient,
     };
-    postShifts(data)
+    postShifts(data, toast)
       .then(() => {
         setIsFormVisible(false);
         setShiftData({
@@ -96,7 +96,7 @@ function Calendar() {
       confirmButtonText: "Confirma!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteShifts(id);
+        deleteShifts(id, toast);
         Swal.fire("Eliminada!", "La mascota fue eliminada.", "success");
       }
     });
@@ -109,10 +109,14 @@ function Calendar() {
       toast.error("Por favor, llene todos los campos", { duration: 2000 });
       return;
     }
-    putShifts(shiftToEdit._id, {
-      ...shiftData,
-      animal: shiftData.selectPatient,
-    })
+    putShifts(
+      shiftToEdit._id,
+      {
+        ...shiftData,
+        animal: shiftData.selectPatient,
+      },
+      toast
+    )
       .then(() => {
         setIsFormVisible(false);
         setShiftToEdit(null);
