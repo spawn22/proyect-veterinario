@@ -15,7 +15,6 @@ export const useAuthStore = create((set) => ({
         throw new Error("Registration failed: Invalid input data");
       }
     } catch (error) {
-      console.log(error);
       if (error.response.data.message) {
         toast.error(error.response.data.message);
       }
@@ -40,7 +39,6 @@ export const useAuthStore = create((set) => ({
         throw new Error("Error al iniciar sesión");
       }
     } catch (error) {
-      console.log(error);
       if (error.response.data.message) {
         toast.error(error.response.data.message);
       }
