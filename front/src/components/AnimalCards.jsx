@@ -22,6 +22,13 @@ const AnimalCards = () => {
   const totalPages = Math.ceil(
     (patients?.length - ITEMS_PER_PAGE) / ITEMS_PER_PAGE + 1
   );
+
+  useEffect(() => {
+    if (shiftedPatients.length === 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  }, [currentPage, shiftedPatients]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -83,11 +90,11 @@ const AnimalCards = () => {
           />
         </div>
       </section>
-        {shiftedPatients.length >= 1 ? (
-          <AnimalCardsList shiftedPatients={shiftedPatients} />
-        ) : (
-          <AnimalErrorSearch />
-        )}
+      {shiftedPatients.length >= 1 ? (
+        <AnimalCardsList shiftedPatients={shiftedPatients} />
+      ) : (
+        <AnimalErrorSearch />
+      )}
       {patients?.length > ITEMS_PER_PAGE && (
         <PaginationTable
           currentPage={currentPage}
