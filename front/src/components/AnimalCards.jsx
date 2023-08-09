@@ -10,25 +10,32 @@ const AnimalCards = () => {
     patients: state.patients,
   }));
   const { getAnimals } = useAnimalStore();
+  // Establece ITEMS_PER_PAGE en 4
   const ITEMS_PER_PAGE = 4;
+  // Establece currentPage en 1 usando el Hook de estado 'useState()'
   const [currentPage, setCurrentPage] = useState(1);
+  // Usa la función 'filterAnimals' del store 'useAnimalStore()' y establece las variables de búsqueda de animales.
   const { filterAnimals } = useAnimalStore();
   const [searchTermName, setSearchTerm] = useState("");
   const [searchTermType, setSearchTermType] = useState("");
+  // Realiza un 'slice' en la matriz 'patients' y establece los pacientes del rango de ITEMS_PER_PAGE en la página actual (currentPage).
   const shiftedPatients = patients?.slice(
     currentPage > 1 ? (currentPage - 1) * ITEMS_PER_PAGE : 0,
     currentPage > 1 ? currentPage * ITEMS_PER_PAGE : ITEMS_PER_PAGE
   );
+  // Calcula el número total de páginas necesarias utilizando 'Math.ceil()' de la longitud total de pacientes.
   const totalPages = Math.ceil(
     (patients?.length - ITEMS_PER_PAGE) / ITEMS_PER_PAGE + 1
   );
 
+  // Hook 'useEffect()' con dependencias de 'currentPage' y 'shiftedPatients'
   useEffect(() => {
+    // Si no hay más pacientes en la página actual.
     if (shiftedPatients.length === 0) {
+      // Asigna la página actual a la página anterior.
       setCurrentPage(currentPage - 1);
     }
   }, [currentPage, shiftedPatients]);
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };

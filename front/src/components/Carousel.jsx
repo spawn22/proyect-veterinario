@@ -15,13 +15,20 @@ const images = [
   },
 ];
 function Carousel() {
+  // Establece el estado de la imagen actual (currentImage) en 0 usando el Hook de estado de 'useState()'.
   const [currentImage, setCurrentImage] = useState(0);
+
+  // Establece la imagen actual a la seleccionaday establece su índice.
   const selectedImage = images[currentImage];
+
+  // Utiliza el Hook useEffect con un array de dependencia vacío ([]) para hacer que la función retorne una función de limpieza que detendrá el intervalo.
   useEffect(() => {
+    // Ejecuta una función callback que actualiza el estado de la imagen actual cada 3000ms.
     const intervalId = setInterval(() => {
       setCurrentImage((currentImage) => (currentImage + 1) % images.length);
     }, 3000);
 
+    // Devuelve una función de limpieza que detiene el intervalo.
     return () => clearInterval(intervalId);
   }, []);
 
@@ -34,11 +41,11 @@ function Carousel() {
           className="w-full h-full object-cover"
         />
       </div>
-        <div className="absolute bottom-0 left-0 right-0 px-4 py-6 text-zinc-950">
-          <h1 className="text-3xl font-extrabold font-customFont mb-2">
-            {selectedImage.text}
-          </h1>
-        </div>
+      <div className="absolute bottom-0 left-0 right-0 px-4 py-6 text-zinc-950">
+        <h1 className="text-3xl font-extrabold font-customFont mb-2">
+          {selectedImage.text}
+        </h1>
+      </div>
     </div>
   );
 }

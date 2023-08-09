@@ -11,29 +11,39 @@ function ShiftTable({
   setShiftToEdit,
   setShiftData,
 }) {
+  // Definir currentPage como 1 utilizando el Hook de estado de 'useState()'
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Definir el número de elementos por página como 5.
   const ITEMS_PER_PAGE = 5;
+
+  // Utiliza el método 'filter' para filtrar los turnos que coinceden con la búsqueda `searchTerm` y la fecha actual.
   const filteredShifts = shifts
     ?.filter((shift) => {
       const searchTermLower = searchTerm.toLowerCase();
+      // Incluye los turnos que coinciden con el término de búsqueda.
       return shift?.animal?.name?.toLowerCase()?.includes(searchTermLower);
     })
     .filter((shift) => {
       const currentDate = moment().startOf("day");
       const shiftDate = moment(shift.date, "YYYY-MM-DD").startOf("day");
 
-      return currentDate.isSameOrBefore(shiftDate); // Devuelve solo los turnos cuya fecha es igual o posterior al día actual
+      // Devuelve solo los turnos cuya fecha es igual o posterior al día actual.
+      return currentDate.isSameOrBefore(shiftDate);
     });
+
+  // Utiliza el método 'slice' para seleccionar y asignar los turnos que corresponden a la página actual.
   const shiftedShifts = filteredShifts?.slice(
     currentPage > 1 ? (currentPage - 1) * ITEMS_PER_PAGE : 0,
     currentPage > 1 ? currentPage * ITEMS_PER_PAGE : ITEMS_PER_PAGE
   );
 
+  // Calcular el número total de páginas utilizando 'Math.ceil()' a partir de la longitud total de turnos.
   const totalPages = Math.ceil(
     (filteredShifts?.length - ITEMS_PER_PAGE) / ITEMS_PER_PAGE + 1
   );
 
+  // Comprueba si el número de turnos en la página actual es cero; si es así, establece la página en la página anterior.
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
