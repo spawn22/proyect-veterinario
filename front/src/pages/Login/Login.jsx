@@ -35,6 +35,7 @@ function Login() {
       context.setIsButtonLoading(false);
       navigate("/home");
     });
+    context.setIsButtonLoading(false);
   };
 
   const handleInputChange = (event) => {
